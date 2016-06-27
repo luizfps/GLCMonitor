@@ -1,4 +1,4 @@
-package com.monitor.glc.glcmonitor;
+package com.monitor.glcmonitor.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

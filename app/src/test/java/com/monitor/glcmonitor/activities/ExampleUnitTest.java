@@ -1,4 +1,4 @@
-package com.monitor.glc.glcmonitor;
+package com.monitor.glcmonitor.activities;
 
 import org.junit.Test;
 

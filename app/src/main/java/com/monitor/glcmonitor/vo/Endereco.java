@@ -1,4 +1,4 @@
-package com.monitor.glc.glcmonitor.vo;
+package com.monitor.glcmonitor.vo;
 
 public class Endereco {
 

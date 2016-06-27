@@ -1,4 +1,4 @@
-package com.monitor.glc.glcmonitor.vo;
+package com.monitor.glcmonitor.vo;
 
 import java.util.List;
 
