@@ -11,6 +11,10 @@
     tools:context="com.monitor.glcmonitor.activities.LoginActivity">
 
     <!-- Login progress -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></FrameLayout>
+
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
@@ -72,17 +76,28 @@
                 android:text="@string/action_sign_in"
                 android:textStyle="bold" />
 
+            <android.support.v7.widget.AppCompatCheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="Save my data"
+                android:textStyle="bold" />
+
             <Button
                 android:id="@+id/email_register_button"
                 style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/action_register_in_short"
                 android:textStyle="bold"
                 android:focusableInTouchMode="false"
-                android:onClick="RegisterClick" />
+                android:onClick="RegisterClick"
+                android:layout_gravity="bottom|center_horizontal" />
+
 
         </LinearLayout>
+
+
     </ScrollView>
 </LinearLayout>
