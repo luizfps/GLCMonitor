@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="bakcgroudNormal">#00FF7F</color>
+    <color name="backgroudFire">#FF0000</color>
+    <color name="backgroudIce">#00BFFF</color>
+    <color name="backgroudDanger">#FF8C00</color>
 </resources>
