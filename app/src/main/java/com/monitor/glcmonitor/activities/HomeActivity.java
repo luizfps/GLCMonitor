@@ -73,19 +73,25 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_graficos) {
 
+        } else if (id == R.id.nav_graficos) {
+            graphClick();
         } else if (id == R.id.nav_cadastrar_sensor) {
 
         } else if (id == R.id.nav_exibir_outro_sensor) {
 
         } else if (id == R.id.nav_configuracoes) {
+            settingsClick();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void graphClick(){
+        Intent intent = new Intent(this, GraphActivity.class);
+        startActivity(intent);
     }
 
     public void settingsClick(){
