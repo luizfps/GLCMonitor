@@ -9,21 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.monitor.glcmonitor.activities.HomeActivity"
-    tools:showIn="@layout/app_bar_home"
-    android:id="@+id/content_home"
-    android:background="@color/bakcgroudNormal">
-
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="23 °C"
-        android:id="@+id/textView"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="80dp" />
+    tools:context="com.monitor.glcmonitor.activities.RegisterSensorActivity"
+    tools:showIn="@layout/activity_register_sensor">
 
 </RelativeLayout>

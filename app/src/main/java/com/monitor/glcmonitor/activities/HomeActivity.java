@@ -1,6 +1,7 @@
 package com.monitor.glcmonitor.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,9 +12,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private double danger = 0.9;
+
+    private RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.content_home);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,11 +79,11 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-
+            // nada a fazaer deixei igual no desenho da interface
         } else if (id == R.id.nav_graficos) {
             graphClick();
         } else if (id == R.id.nav_cadastrar_sensor) {
-
+            registerSensorClick();
         } else if (id == R.id.nav_exibir_outro_sensor) {
 
         } else if (id == R.id.nav_configuracoes) {
@@ -89,6 +95,11 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
 
+    public void registerSensorClick(){
+        Intent intent = new Intent(this, RegisterSensorActivity.class);
+        startActivity(intent);
+    }
+
     public void graphClick(){
         Intent intent = new Intent(this, GraphActivity.class);
         startActivity(intent);
@@ -98,4 +109,23 @@ public class HomeActivity extends AppCompatActivity
         Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
     }
+
+    private void setBackgroudColor(double temperature, double temperatureMin, double temperatureMax){
+
+        if(temperature > temperatureMax){
+            relativeLayout.setBackgroundColor(getResources().getColor(R.color.backgroudFire));
+        }
+        else if(temperature > temperatureMax - danger ){
+            relativeLayout.setBackgroundColor(getResources().getColor(R.color.backgroudDanger));
+        }
+        else if (temperature < temperatureMin){
+            relativeLayout.setBackgroundColor(getResources().getColor(R.color.backgroudIce));
+        }
+    }
+
+    private void resetBackgroudColor(){
+        relativeLayout.setBackgroundColor(getResources().getColor(R.color.bakcgroudNormal));
+    }
+
+
 }
