@@ -19,7 +19,7 @@ public class HomeActivity extends AppCompatActivity
 
     private double danger = 0.9;
 
-    private RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.content_home);
+    public RelativeLayout relativeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +36,8 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        relativeLayout = (RelativeLayout)findViewById(R.id.content_home);
     }
 
     @Override
@@ -110,7 +112,7 @@ public class HomeActivity extends AppCompatActivity
         startActivity(intent);
     }
 
-    private void setBackgroudColor(double temperature, double temperatureMin, double temperatureMax){
+    public void setBackgroudColor(double temperature, double temperatureMin, double temperatureMax){
 
         if(temperature > temperatureMax){
             relativeLayout.setBackgroundColor(getResources().getColor(R.color.backgroudFire));
@@ -123,7 +125,7 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
-    private void resetBackgroudColor(){
+    public void resetBackgroudColor(){
         relativeLayout.setBackgroundColor(getResources().getColor(R.color.bakcgroudNormal));
     }
 
