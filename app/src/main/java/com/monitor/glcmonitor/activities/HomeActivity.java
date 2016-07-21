@@ -72,15 +72,15 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_home) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_graficos) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_cadastrar_sensor) {
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_exibir_outro_sensor) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_configuracoes) {
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

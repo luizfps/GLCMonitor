@@ -3,25 +3,25 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_menu_slideshow"
             android:title="Home" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_graficos"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Gráficos" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:id="@+id/nav_cadastrar_sensor"
+            android:icon="@drawable/ic_menu_share"
             android:title="Cadastrar sensor" />
         <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
+            android:id="@+id/nav_exibir_outro_sensor"
+            android:icon="@drawable/ic_menu_gallery"
             android:title="Exibir outro sensor" />
 
         <item
-            android:id="@+id/nav_share"
-            android:icon="@drawable/ic_menu_share"
+            android:id="@+id/nav_configuracoes"
+            android:icon="@drawable/ic_menu_manage"
             android:title="configurações" />
     </group>
 
