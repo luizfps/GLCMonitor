@@ -21,7 +21,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
-    <string name="title_activity_settings">SettingsActivity</string>
-    <string name="title_activity_graph">GraphActivity</string>
-    <string name="title_activity_register_sensor">RegisterSensorActivity</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_graph">Graph Plot</string>
+    <string name="title_activity_register_sensor">Register new sensor</string>
 </resources>

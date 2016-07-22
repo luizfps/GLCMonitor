@@ -1,7 +1,6 @@
 package com.monitor.glcmonitor.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,6 +10,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
@@ -28,7 +28,6 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
     }
-
 
     @Override
     public void onBackPressed() {
