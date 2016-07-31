@@ -71,6 +71,9 @@ public class Usuario {
     }
     
     public String getSexoValueStr() {
+    	if(sexo == null) {
+    		return null;
+    	}
         return String.valueOf(sexo.getValue());
     }
 
@@ -150,6 +153,14 @@ public class Usuario {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [nome=" + nome + ", telefone=" + telefone + ", email=" + email + ", dataDeCadastramento="
+				+ dataDeCadastramento + ", rg=" + rg + ", cpf=" + cpf + ", sexo=" + sexo + ", dataDeNascimento="
+				+ dataDeNascimento + ", login=" + login + ", senha=" + senha + ", endereco=" + endereco + ", sensores="
+				+ sensores + "]";
 	}
 	
 	

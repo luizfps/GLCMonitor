@@ -54,12 +54,17 @@ public class UsuarioSensorDao {
 			while (rs.next()) {
 				// criando o objeto registroDeTemperatura
 				UsuarioSensor usuarioSensor = new UsuarioSensor();
-				usuarioSensor.setTemperaturaMinima(rs.getFloat("temperaturaMinima"));
-				usuarioSensor.setTemperaturaMaxima(rs.getFloat("temperaturaMaxima"));
-				usuarioSensor.setIntervaloDeAtualizacaoDeDados(rs.
-						getInt("intervaloDeAtualizacaoDeDados"));
-				usuarioSensor.setSensor(new SensorDao().busca(rs.getLong("sensor_codigo")));
-				usuarioSensor.setUsuario(new UsuarioDao().busca(rs.getString("usuario_login")));
+				usuarioSensor.setTemperaturaMinima(Util
+						.getResultSetValueFloat(rs, "temperaturaMinima"));
+				usuarioSensor.setTemperaturaMaxima(Util
+						.getResultSetValueFloat(rs, "temperaturaMaxima"));
+				usuarioSensor.setIntervaloDeAtualizacaoDeDados(Util
+						.getResultSetValueInteger(rs, 
+								"intervaloDeAtualizacaoDeDados"));
+				usuarioSensor.setSensor(new SensorDao().busca(rs
+						.getLong("sensor_codigo")));
+				usuarioSensor.setUsuario(new UsuarioDao().busca(rs
+						.getString("usuario_login")));
 				// adicionando o objeto à lista
 				registroDeTemperaturas.add(usuarioSensor);
 			}
@@ -82,12 +87,17 @@ public class UsuarioSensorDao {
 			while (rs.next()) {
 				// criando o objeto registroDeTemperatura
 				UsuarioSensor usuarioSensor = new UsuarioSensor();
-				usuarioSensor.setTemperaturaMinima(rs.getFloat("temperaturaMinima"));
-				usuarioSensor.setTemperaturaMaxima(rs.getFloat("temperaturaMaxima"));
-				usuarioSensor.setIntervaloDeAtualizacaoDeDados(rs.
-						getInt("intervaloDeAtualizacaoDeDados"));
-				usuarioSensor.setSensor(new SensorDao().busca(rs.getLong("sensor_codigo")));
-				usuarioSensor.setUsuario(new UsuarioDao().busca(rs.getString("usuario_login")));
+				usuarioSensor.setTemperaturaMinima(Util
+						.getResultSetValueFloat(rs, "temperaturaMinima"));
+				usuarioSensor.setTemperaturaMaxima(Util
+						.getResultSetValueFloat(rs, "temperaturaMaxima"));
+				usuarioSensor.setIntervaloDeAtualizacaoDeDados(Util
+						.getResultSetValueInteger(rs, 
+								"intervaloDeAtualizacaoDeDados"));
+				usuarioSensor.setSensor(new SensorDao().busca(rs
+						.getLong("sensor_codigo")));
+				usuarioSensor.setUsuario(new UsuarioDao().busca(rs
+						.getString("usuario_login")));
 				// adicionando o objeto à lista
 				registroDeTemperaturas.add(usuarioSensor);
 			}
@@ -110,12 +120,17 @@ public class UsuarioSensorDao {
 			while (rs.next()) {
 				// criando o objeto registroDeTemperatura
 				UsuarioSensor usuarioSensor = new UsuarioSensor();
-				usuarioSensor.setTemperaturaMinima(rs.getFloat("temperaturaMinima"));
-				usuarioSensor.setTemperaturaMaxima(rs.getFloat("temperaturaMaxima"));
-				usuarioSensor.setIntervaloDeAtualizacaoDeDados(rs.
-						getInt("intervaloDeAtualizacaoDeDados"));
-				usuarioSensor.setSensor(new SensorDao().busca(rs.getLong("sensor_codigo")));
-				usuarioSensor.setUsuario(new UsuarioDao().busca(rs.getString("usuario_login")));
+				usuarioSensor.setTemperaturaMinima(Util
+						.getResultSetValueFloat(rs, "temperaturaMinima"));
+				usuarioSensor.setTemperaturaMaxima(Util
+						.getResultSetValueFloat(rs, "temperaturaMaxima"));
+				usuarioSensor.setIntervaloDeAtualizacaoDeDados(Util
+						.getResultSetValueInteger(rs, 
+								"intervaloDeAtualizacaoDeDados"));
+				usuarioSensor.setSensor(new SensorDao().busca(rs
+						.getLong("sensor_codigo")));
+				usuarioSensor.setUsuario(new UsuarioDao().busca(rs
+						.getString("usuario_login")));
 				// adicionando o objeto à lista
 				registroDeTemperaturas.add(usuarioSensor);
 			}

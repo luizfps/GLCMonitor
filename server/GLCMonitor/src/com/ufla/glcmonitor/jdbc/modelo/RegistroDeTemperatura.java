@@ -60,6 +60,11 @@ public class RegistroDeTemperatura {
 		}
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "RegistroDeTemperatura [temperatura=" + temperatura + ", momento=" + momento + "]";
+	}
     
     
 }

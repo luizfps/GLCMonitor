@@ -1,7 +1,6 @@
 package com.ufla.glcmonitor.jdbc.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,7 +30,7 @@ public class RegistroDeTemperaturaDao {
 			// seta os valores
 			Util.setFloatPreparedStatement(stmt, 1, registroDeTemperatura
 					.getTemperatura());
-			stmt.setDate(2, new Date(registroDeTemperatura.getMomento().getTime()));
+			Util.setDatePreparedStatement(stmt, 2, registroDeTemperatura.getMomento());
 			stmt.setLong(3, sensorCodigo);
 			// executa
 			stmt.execute();
@@ -52,8 +51,9 @@ public class RegistroDeTemperaturaDao {
 			while (rs.next()) {
 				// criando o objeto registroDeTemperatura
 				RegistroDeTemperatura registroDeTemperatura = new RegistroDeTemperatura();
-				registroDeTemperatura.setTemperatura(rs.getFloat("temperatura"));
-				registroDeTemperatura.setMomento(rs.getDate("momento"));;
+				registroDeTemperatura.setTemperatura(Util
+						.getResultSetValueFloat(rs, "temperatura"));
+				registroDeTemperatura.setMomento(rs.getDate("momento"));
 				// adicionando o objeto à lista
 				registroDeTemperaturas.add(registroDeTemperatura);
 			}

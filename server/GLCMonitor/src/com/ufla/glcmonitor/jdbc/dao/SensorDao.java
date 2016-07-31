@@ -55,9 +55,11 @@ public class SensorDao {
 				Sensor sensor = new Sensor();
 				sensor.setCodigo(rs.getLong("codigo"));
 				sensor.setModelo(rs.getString("modelo"));
-				sensor.setTemperaturaMinima(rs.getFloat("temperaturaMinima"));
-				sensor.setTemperaturaMaxima(rs.getFloat("temperaturaMaxima"));
-				sensor.setErro(rs.getFloat("erro"));
+				sensor.setTemperaturaMinima(Util
+						.getResultSetValueFloat(rs, "temperaturaMinima"));
+				sensor.setTemperaturaMaxima(Util
+						.getResultSetValueFloat(rs, "temperaturaMaxima"));
+				sensor.setErro(Util.getResultSetValueFloat(rs, "erro"));
 				sensor.setUsuario(new UsuarioDao().busca(rs.getString("usuario_login")));
 				sensor.setRegistrosDeTemperatura(new RegistroDeTemperaturaDao().busca(sensor.getCodigo()));
 				// adicionando o objeto à lista
@@ -82,10 +84,12 @@ public class SensorDao {
 			if(rs.next()) {
 				sensor = new Sensor();
 				sensor.setCodigo(rs.getLong("codigo"));
-				sensor.setErro(rs.getFloat("erro"));
+				sensor.setErro(Util.getResultSetValueFloat(rs, "erro"));
 				sensor.setModelo(rs.getString("modelo"));
-				sensor.setTemperaturaMaxima(rs.getFloat("temperaturaMaxima"));
-				sensor.setTemperaturaMinima(rs.getFloat("temperaturaMinima"));
+				sensor.setTemperaturaMaxima(Util
+						.getResultSetValueFloat(rs, "temperaturaMaxima"));
+				sensor.setTemperaturaMinima(Util
+						.getResultSetValueFloat(rs, "temperaturaMinima"));
 				sensor.setUsuario(new UsuarioDao().busca(rs
 						.getString("usuario_login")));
 				sensor.setRegistrosDeTemperatura(new RegistroDeTemperaturaDao()
@@ -142,10 +146,12 @@ public class SensorDao {
 			while(rs.next()) {
 				Sensor sensor = new Sensor();
 				sensor.setCodigo(rs.getLong("codigo"));
-				sensor.setErro(rs.getFloat("erro"));
+				sensor.setErro(Util.getResultSetValueFloat(rs, "erro"));
 				sensor.setModelo(rs.getString("modelo"));
-				sensor.setTemperaturaMaxima(rs.getFloat("temperaturaMaxima"));
-				sensor.setTemperaturaMinima(rs.getFloat("temperaturaMinima"));
+				sensor.setTemperaturaMaxima(Util
+						.getResultSetValueFloat(rs, "temperaturaMaxima"));
+				sensor.setTemperaturaMinima(Util
+						.getResultSetValueFloat(rs, "temperaturaMinima"));
 				sensor.setUsuario(new UsuarioDao().busca(rs
 						.getString("usuario_login")));
 				sensor.setRegistrosDeTemperatura(new RegistroDeTemperaturaDao()

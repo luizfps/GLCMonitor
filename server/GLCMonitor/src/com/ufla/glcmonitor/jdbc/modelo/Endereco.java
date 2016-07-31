@@ -143,6 +143,12 @@ public class Endereco {
 		}
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Endereco [logradouro=" + logradouro + ", numero=" + numero + ", complemento=" + complemento
+				+ ", bairro=" + bairro + ", cidade=" + cidade + ", estado=" + estado + ", cep=" + cep + "]";
+	}
     
     
 }

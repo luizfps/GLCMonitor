@@ -53,12 +53,13 @@ public class EnderecoDao {
 			if(rs.next()) {
 				endereco = new Endereco();
 				endereco.setBairro(rs.getString("bairro"));
-				endereco.setCep(rs.getLong("cep"));
+				endereco.setCep(Util.getResultSetValueLong(rs, "cep"));
 				endereco.setCidade(rs.getString("cidade"));
 				endereco.setComplemento(rs.getString("complemento"));
 				endereco.setEstado(rs.getString("estado"));
 				endereco.setLogradouro(rs.getString("logradouro"));
-				endereco.setNumero(rs.getInt("numero"));
+				endereco.setNumero(Util.
+						getResultSetValueInteger(rs, "numero"));
 			}
 			rs.close();
 			stmt.close();
@@ -68,19 +69,19 @@ public class EnderecoDao {
 		}
 	}
 	
-	public void altera(Endereco endereco, String loginUsuario) {
+	protected void altera(Endereco endereco, String loginUsuario) {
 		try {
 			PreparedStatement stmt = this.connection
 					.prepareStatement("update endereco set bairro=?, cep=?, cidade=?," +
              "complemento=?, estado=?, logradouro=?, numero=? where usuario_login=?");
 			stmt.setString(1, endereco.getBairro());
 			Util.setLongPreparedStatement(stmt,2, endereco.getCep());
-			stmt.setString(4, endereco.getCidade());
-			stmt.setString(5, endereco.getComplemento());
-			stmt.setString(6, endereco.getEstado());
-			stmt.setString(7, endereco.getLogradouro());
-			Util.setIntegerPreparedStatement(stmt, 8, endereco.getNumero());
-			stmt.setString(9, loginUsuario);
+			stmt.setString(3, endereco.getCidade());
+			stmt.setString(4, endereco.getComplemento());
+			stmt.setString(5, endereco.getEstado());
+			stmt.setString(6, endereco.getLogradouro());
+			Util.setIntegerPreparedStatement(stmt, 7, endereco.getNumero());
+			stmt.setString(8, loginUsuario);
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {

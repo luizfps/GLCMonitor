@@ -92,5 +92,11 @@ public class UsuarioSensor {
 		}
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "UsuarioSensor [limitesDeTemperatura=" + limitesDeTemperatura + ", intervaloDeAtualizacaoDeDados="
+				+ intervaloDeAtualizacaoDeDados + ", usuario=" + usuario + ", sensor=" + sensor + "]";
+	}
 	
 }

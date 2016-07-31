@@ -104,6 +104,12 @@ public class Sensor {
 		}
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "Sensor [codigo=" + codigo + ", modelo=" + modelo + ", faixaDeOperacao=" + faixaDeOperacao + ", erro="
+				+ erro + ", usuario=" + usuario + ", registrosDeTemperatura=" + registrosDeTemperatura + "]";
+	}
 	
 	
 	
