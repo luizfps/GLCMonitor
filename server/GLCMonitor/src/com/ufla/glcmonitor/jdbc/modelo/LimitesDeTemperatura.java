@@ -61,10 +61,8 @@ public class LimitesDeTemperatura {
 
 	@Override
 	public String toString() {
-		return "LimitesDeTemperatura [temperaturaMinima=" + temperaturaMinima + ", temperaturaMaxima="
-				+ temperaturaMaxima + "]";
+		return "LimitesDeTemperatura [temperaturaMinima=" + temperaturaMinima 
+				+ ", temperaturaMaxima=" + temperaturaMaxima + "]";
 	}
     
-    
-
 }

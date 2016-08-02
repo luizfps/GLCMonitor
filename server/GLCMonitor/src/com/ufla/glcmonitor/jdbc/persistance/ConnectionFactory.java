@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 	
-	public static String URL =  "jdbc:mysql://localhost/glcmonitor";
+	public static String URL =  "jdbc:mysql://localhost/glcmonitortestes";
 	
 	public Connection getConnection() {
         try {

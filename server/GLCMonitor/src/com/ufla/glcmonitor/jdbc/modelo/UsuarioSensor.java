@@ -95,8 +95,9 @@ public class UsuarioSensor {
 
 	@Override
 	public String toString() {
-		return "UsuarioSensor [limitesDeTemperatura=" + limitesDeTemperatura + ", intervaloDeAtualizacaoDeDados="
-				+ intervaloDeAtualizacaoDeDados + ", usuario=" + usuario + ", sensor=" + sensor + "]";
+		return "UsuarioSensor [limitesDeTemperatura=" + limitesDeTemperatura 
+				+ ", intervaloDeAtualizacaoDeDados=" + intervaloDeAtualizacaoDeDados 
+				+ ", usuario=" + usuario + ", sensor=" + sensor + "]";
 	}
 	
 }

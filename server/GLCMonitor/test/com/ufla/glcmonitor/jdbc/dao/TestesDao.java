@@ -18,10 +18,6 @@ import com.ufla.glcmonitor.jdbc.persistance.ConnectionFactory;
 
 public class TestesDao {
 
-    @BeforeClass
-    public static void setUp() {
-    	ConnectionFactory.URL = ConnectionFactory.URL+"testes";
-    }
 
     @AfterClass
     public static void tearDown() throws SQLException {

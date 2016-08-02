@@ -1,4 +1,4 @@
-package com.ufla.glcmonitor.jdbc.modelo;
+package com.ufla.glcmonitor.modelo;
 
 import java.util.Date;
 import java.util.List;
@@ -69,18 +69,18 @@ public class Usuario {
     public Sexo getSexo() {
         return sexo;
     }
-    
+
     public String getSexoValueStr() {
-    	if(sexo == null) {
-    		return null;
-    	}
+        if(sexo == null) {
+            return null;
+        }
         return String.valueOf(sexo.getValue());
     }
 
     public void setSexo(Sexo sexo) {
         this.sexo = sexo;
     }
-    
+
     public void setSexo(Character sexoValue) {
         this.sexo = Sexo.getSexo(sexoValue);
     }
@@ -117,51 +117,51 @@ public class Usuario {
         this.sensores = sensores;
     }
 
-	public Endereco getEndereco() {
-		return endereco;
-	}
+    public Endereco getEndereco() {
+        return endereco;
+    }
 
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((login == null) ? 0 : login.hashCode());
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((login == null) ? 0 : login.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (!(obj instanceof Usuario)) {
-			return false;
-		}
-		Usuario other = (Usuario) obj;
-		if (login == null) {
-			if (other.login != null) {
-				return false;
-			}
-		} else if (!login.equals(other.login)) {
-			return false;
-		}
-		return true;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Usuario)) {
+            return false;
+        }
+        Usuario other = (Usuario) obj;
+        if (login == null) {
+            if (other.login != null) {
+                return false;
+            }
+        } else if (!login.equals(other.login)) {
+            return false;
+        }
+        return true;
+    }
 
-	@Override
-	public String toString() {
-		return "Usuario [nome=" + nome + ", telefone=" + telefone + ", email=" 
-				+ email + ", dataDeCadastramento=" + dataDeCadastramento + ", rg=" 
-				+ rg + ", cpf=" + cpf + ", sexo=" + sexo + ", dataDeNascimento="
-				+ dataDeNascimento + ", login=" + login + ", senha=" + senha 
-				+ ", endereco=" + endereco + ", sensores=" + sensores + "]";
-	}
-	
+    @Override
+    public String toString() {
+        return "Usuario [nome=" + nome + ", telefone=" + telefone + ", email="
+                + email + ", dataDeCadastramento=" + dataDeCadastramento + ", rg="
+                + rg + ", cpf=" + cpf + ", sexo=" + sexo + ", dataDeNascimento="
+                + dataDeNascimento + ", login=" + login + ", senha=" + senha
+                + ", endereco=" + endereco + ", sensores=" + sensores + "]";
+    }
+
 }

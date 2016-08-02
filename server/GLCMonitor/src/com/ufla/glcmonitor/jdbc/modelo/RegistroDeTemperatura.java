@@ -63,8 +63,8 @@ public class RegistroDeTemperatura {
 
 	@Override
 	public String toString() {
-		return "RegistroDeTemperatura [temperatura=" + temperatura + ", momento=" + momento + "]";
+		return "RegistroDeTemperatura [temperatura=" + temperatura 
+				+ ", momento=" + momento + "]";
 	}
-    
-    
+        
 }

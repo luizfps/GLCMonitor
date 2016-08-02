@@ -47,7 +47,6 @@ create table registroDeTemperatura (
   temperatura FLOAT,
   momento DATETIME,
   sensor_codigo BIGINT NOT NULL,
-  PRIMARY KEY  (sensor_codigo),
   FOREIGN KEY (sensor_codigo) 
         REFERENCES sensor(codigo)
         ON DELETE CASCADE

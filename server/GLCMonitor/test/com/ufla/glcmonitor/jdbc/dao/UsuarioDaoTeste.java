@@ -124,6 +124,11 @@ public class UsuarioDaoTeste {
 		assertEquals(usuarioEsperado, usuario1);
 	}
 	
+	@Test
+	public void adicionaUsuarioNullTeste() {
+		usuarioDao.adiciona(null);
+	}
+	
 	@Test 
 	public void adiciona1UsuarioTeste() {
 		usuarioDao.adiciona(usuario1);

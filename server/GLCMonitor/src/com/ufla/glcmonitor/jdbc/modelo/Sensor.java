@@ -107,11 +107,10 @@ public class Sensor {
 
 	@Override
 	public String toString() {
-		return "Sensor [codigo=" + codigo + ", modelo=" + modelo + ", faixaDeOperacao=" + faixaDeOperacao + ", erro="
-				+ erro + ", usuario=" + usuario + ", registrosDeTemperatura=" + registrosDeTemperatura + "]";
+		return "Sensor [codigo=" + codigo + ", modelo=" + modelo 
+				+ ", faixaDeOperacao=" + faixaDeOperacao + ", erro="
+				+ erro + ", usuario=" + usuario + ", registrosDeTemperatura=" 
+				+ registrosDeTemperatura + "]";
 	}
-	
-	
-	
 	
 }
