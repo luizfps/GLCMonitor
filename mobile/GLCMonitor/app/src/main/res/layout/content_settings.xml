@@ -12,4 +12,63 @@
     tools:context="com.ufla.glcmonitor.activities.SettingsActivity"
     tools:showIn="@layout/activity_settings">
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Limite Superior :"
+        android:id="@+id/textView2"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+
+    <android.support.v7.widget.AppCompatSeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBarSuperior"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:indeterminate="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Limite Inferior :"
+        android:id="@+id/textView3"
+        android:layout_marginTop="44dp"
+        android:layout_below="@+id/seekBarSuperior"
+        android:layout_centerHorizontal="true" />
+
+    <android.support.v7.widget.AppCompatSeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBarInferior"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:indeterminate="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Frequencia :"
+        android:id="@+id/textView4"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <android.support.v7.widget.AppCompatSeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBarFreqence"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/textView4"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:indeterminate="false" />
 </RelativeLayout>

@@ -11,5 +11,77 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.ufla.glcmonitor.activities.RegisterSensorActivity"
     tools:showIn="@layout/activity_register_sensor">
+    
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:id="@+id/RegisterSendorModel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Model"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <android.support.v7.widget.AppCompatSeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBarInferior"
+        android:layout_marginTop="37dp"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Limite Superior :"
+        android:id="@+id/textView3"
+        android:layout_alignTop="@+id/scrollView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="74dp" />
+
+    <android.support.v7.widget.AppCompatSeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBarFreqence"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Limite Inferior :"
+        android:layout_below="@+id/seekBarInferior"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register sensor"
+        android:id="@+id/button"
+        android:layout_below="@+id/seekBarFreqence"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="55dp" />
 
 </RelativeLayout>
