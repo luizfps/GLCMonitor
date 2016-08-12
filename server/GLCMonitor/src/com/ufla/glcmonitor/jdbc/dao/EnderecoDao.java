@@ -16,7 +16,8 @@ public class EnderecoDao {
 		this.connection = new ConnectionFactory().getConnection();
 	}
 	
-	protected void adiciona(Endereco endereco, String loginUsuario) {
+	protected void adiciona(Endereco endereco, String loginUsuario) 
+			throws SQLException {
 		String sql = "insert into endereco "
 				+ "(logradouro,numero,complemento,bairro,"
 				+ "cidade,estado,cep,usuario_login)"
@@ -38,11 +39,12 @@ public class EnderecoDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	
-	protected Endereco busca(String usuarioLogin) {
+	protected Endereco busca(String usuarioLogin) throws SQLException {
 		try {
 			PreparedStatement stmt = this.connection.
 					prepareStatement("select * from endereco "
@@ -65,11 +67,13 @@ public class EnderecoDao {
 			stmt.close();
 			return endereco;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	
-	protected void altera(Endereco endereco, String loginUsuario) {
+	protected void altera(Endereco endereco, String loginUsuario) 
+			throws SQLException {
 		try {
 			PreparedStatement stmt = this.connection
 					.prepareStatement("update endereco set bairro=?, cep=?, cidade=?," +
@@ -85,7 +89,8 @@ public class EnderecoDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	

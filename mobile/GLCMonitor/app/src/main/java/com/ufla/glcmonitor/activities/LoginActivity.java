@@ -3,6 +3,8 @@ package com.ufla.glcmonitor.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -29,7 +31,18 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.ufla.glcmonitor.modelo.Usuario;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,6 +69,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Keep track of the login task to ensure we can cancel it if requested.
      */
     private UserLoginTask mAuthTask = null;
+    private Usuario usuario;
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -67,6 +81,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        usuario = new Usuario();
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -185,10 +200,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
-            homeClick(focusView);
+            usuario.setLogin(mEmailView.getText().toString());
+            usuario.setSenha(mPasswordView.getText().toString());
+            new Post(this).execute();
+            //homeClick(focusView);
         }
     }
 
@@ -355,8 +370,86 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     public void homeClick(View v){
+        showProgress(true);
+        mAuthTask = new UserLoginTask(usuario.getLogin(), usuario.getSenha());
+        mAuthTask.execute((Void) null);
         Intent intent = new Intent(this, HomeActivity.class);
+        intent.putExtra("usuario", usuario);
         startActivity(intent);
+    }
+
+    private class Post extends AsyncTask<String, Void, Void> {
+
+        /*
+        requests are never cached
+        requests have no restrictions on data length
+        */
+
+        final Context context;
+        private Gson gson;
+
+        public Post(Context c){
+            this.context = c;
+            this.gson = new Gson();
+        }
+
+//        protected void onPreExecute(){
+//            progress = new ProgressDialog(this.context);
+//            progress.setMessage("Loading");
+//            progress.show();
+//        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            try {
+
+                URL url = new URL("http://192.168.56.1:8081/GLCMonitor/logar.jsp");
+
+                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+                String urlParameters = "usuario="+gson.toJson(usuario, Usuario.class);
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("USER-AGENT", "Mozilla/5.0");
+                connection.setRequestProperty("ACCEPT-LANGUAGE", "en-US,en;0.5");
+                connection.setDoOutput(true);
+                DataOutputStream dStream = new DataOutputStream(connection.getOutputStream());
+                dStream.writeBytes(urlParameters);
+                dStream.flush();
+                dStream.close();
+                //int responseCode = connection.getResponseCode();
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String line = null;
+                final StringBuilder responseOutput = new StringBuilder();
+                while((line = br.readLine()) != null ) {
+                    responseOutput.append(line);
+                }
+                br.close();
+
+                LoginActivity.this.runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        System.out.println(responseOutput.toString());
+                        if(responseOutput.toString().equals("Sucesso!")) {
+                            homeClick(getCurrentFocus());
+                        } else {
+                            Toast.makeText(context,responseOutput.toString(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+//        protected void onPostExecute() {
+//            progress.dismiss();
+//        }
     }
 }
 

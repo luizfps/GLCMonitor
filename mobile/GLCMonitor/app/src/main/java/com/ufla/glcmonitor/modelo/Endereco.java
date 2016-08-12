@@ -1,6 +1,8 @@
 package com.ufla.glcmonitor.modelo;
 
-public class Endereco {
+import java.io.Serializable;
+
+public class Endereco implements Serializable {
 
     private String logradouro;
     private Integer numero;

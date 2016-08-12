@@ -1,5 +1,6 @@
 package com.ufla.glcmonitor.activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -8,16 +9,22 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.ufla.glcmonitor.modelo.Usuario;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private double danger = 0.9;
-
     public RelativeLayout relativeLayout;
+    private Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +32,14 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if(getIntent() != null && getIntent().getExtras() != null
+                && getIntent().getExtras().get("usuario") != null) {
+            usuario = (Usuario) getIntent().getExtras().get("usuario");
+        }
+        Toast.makeText(this, usuario.getNome()+";"+usuario.getLogin(),
+                Toast.LENGTH_SHORT).show();
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -35,7 +50,13 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        relativeLayout = (RelativeLayout)findViewById(R.id.content_home);
+        relativeLayout = (RelativeLayout) findViewById(R.id.content_home);
+
+        LinearLayout navHeaderApp = (LinearLayout) getResources().getLayout(R.layout.nav_header_app);
+        ((TextView) navHeaderApp.findViewById(R.id.navName)).setText("");
+        ((TextView) navHeaderApp.findViewById(R.id.navLogin)).setText("");
+        int layoutID = getResources().getIdentifier("layout"+n, "id", getPackageName());
+        return (LinearLayout) LayoutInflater.from(this).inflate(layoutID, null);
     }
 
     @Override

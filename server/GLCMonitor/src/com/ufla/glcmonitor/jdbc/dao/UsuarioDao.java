@@ -19,8 +19,52 @@ public class UsuarioDao {
 	public UsuarioDao() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
+	
+	private String getMensagemEntradaDuplicadaAdiciona(Usuario usuario) 
+			throws SQLException {
+		StringBuilder msg = new StringBuilder("Entrada duplicada! Campo(s) ");
+		if(busca(usuario.getLogin(), "login") != null) {
+			msg.append("login, ");
+		}
+		if(usuario.getCpf() != null &&
+				busca(usuario.getCpf().toString(), "cpf") != null) {
+			msg.append("cpf, ");
+		}
+		if(usuario.getRg() != null && 
+				busca(usuario.getRg().toString(), "rg") != null) {
+			msg.append("rg, ");
+		}
+		if(busca(usuario.getEmail(), "email") != null) {
+			msg.append("email, ");
+		}
+		msg.delete(msg.length()-2, msg.length()).append(" duplicado(s)!");
+		return msg.toString();
+	}
+	
+	private String getMensagemEntradaDuplicadaAltera(Usuario usuario) 
+			throws SQLException {
+		StringBuilder msg = new StringBuilder("Entrada duplicada! Campo(s) ");
+		if(usuario.getCpf() != null) {
+			Usuario u = busca(usuario.getCpf().toString(), "cpf");
+			if(u != null && !u.getLogin().equals(usuario.getLogin())) {
+				msg.append("cpf, ");
+			}
+		}
+		if(usuario.getRg() != null) {
+			Usuario u = busca(usuario.getRg().toString(), "rg");
+			if(u != null && !u.getLogin().equals(usuario.getLogin())) {
+				msg.append("rg, ");
+			}
+		}
+		Usuario u = busca(usuario.getEmail(), "email");
+		if(u != null && !u.getLogin().equals(usuario.getLogin())) {
+			msg.append("email, ");
+		}
+		msg.delete(msg.length()-2, msg.length()).append(" duplicado(s)!");
+		return msg.toString();
+	}
 
-	public void adiciona(Usuario usuario) {
+	public void adiciona(Usuario usuario) throws SQLException {
 		String sql = "insert into usuario "
 				+ "(login,senha,nome,telefone,email,rg,cpf,"
 				+ "sexo,dataDeCadastramento,dataDeNascimento)"
@@ -44,7 +88,12 @@ public class UsuarioDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			e.printStackTrace();
+			if(e.getMessage().contains("Duplicate entry")) {
+				throw new SQLException(getMensagemEntradaDuplicadaAdiciona(usuario));
+			}
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 		if (usuario.getEndereco() != null) {
 			EnderecoDao enderecoDao = new EnderecoDao();
@@ -52,7 +101,7 @@ public class UsuarioDao {
 		}
 	}
 
-	public List<Usuario> getLista() {
+	public List<Usuario> getLista() throws SQLException {
 		try {
 			List<Usuario> usuarios = new ArrayList<>();
 			PreparedStatement stmt = this.connection
@@ -87,16 +136,58 @@ public class UsuarioDao {
 			stmt.close();
 			return usuarios;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	
-	public Usuario busca(String login) {
+	@SuppressWarnings("unused")
+	private List<Usuario> buscaLista(String filtro, String campo) 
+			throws SQLException {
 		try {
 			PreparedStatement stmt = this.connection.
 					prepareStatement("select * from usuario "
-							+ "where login=?");
-			stmt.setString(1, login);
+							+ "where "+campo+"=?");
+			stmt.setString(1, filtro);
+			ResultSet rs = stmt.executeQuery();
+			List<Usuario> usuarios = new ArrayList<>();
+			while(rs.next()) {
+				Usuario usuario = new Usuario();
+				usuario.setCpf(Util.getResultSetValueLong(rs, "cpf"));
+				usuario.setDataDeCadastramento(rs.getDate("dataDeCadastramento"));
+				usuario.setDataDeNascimento(rs.getDate("dataDeNascimento"));
+				usuario.setEmail(rs.getString("email"));
+				usuario.setEndereco(new EnderecoDao().busca(rs.getString("login")));
+				usuario.setLogin(rs.getString("login"));
+				usuario.setNome(rs.getString("nome"));
+				usuario.setRg(Util.getResultSetValueLong(rs, "rg"));
+				usuario.setSenha(rs.getString("senha"));
+				usuario.setSensores(new SensorDao().buscaPorUsuario(rs.getString("login")));
+				String sexoStr = rs.getString("sexo");
+				if(sexoStr == null) {
+					Sexo sexo = null;
+					usuario.setSexo(sexo);
+				} else {
+					usuario.setSexo(rs.getString("sexo").charAt(0));
+				}
+				usuario.setTelefone(Util.getResultSetValueLong(rs, "telefone"));
+				usuarios.add(usuario);
+			}
+			rs.close();
+			stmt.close();
+			return usuarios;
+		} catch (SQLException e) {
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
+		}
+	}
+	
+	private Usuario busca(String filtro, String campo) throws SQLException {
+		try {
+			PreparedStatement stmt = this.connection.
+					prepareStatement("select * from usuario "
+							+ "where "+campo+"=?");
+			stmt.setString(1, filtro);
 			ResultSet rs = stmt.executeQuery();
 			Usuario usuario = null;
 			if(rs.next()) {
@@ -105,12 +196,12 @@ public class UsuarioDao {
 				usuario.setDataDeCadastramento(rs.getDate("dataDeCadastramento"));
 				usuario.setDataDeNascimento(rs.getDate("dataDeNascimento"));
 				usuario.setEmail(rs.getString("email"));
-				usuario.setEndereco(new EnderecoDao().busca(login));
+				usuario.setEndereco(new EnderecoDao().busca(rs.getString("login")));
 				usuario.setLogin(rs.getString("login"));
 				usuario.setNome(rs.getString("nome"));
 				usuario.setRg(Util.getResultSetValueLong(rs, "rg"));
 				usuario.setSenha(rs.getString("senha"));
-				usuario.setSensores(new SensorDao().buscaPorUsuario(login));
+				usuario.setSensores(new SensorDao().buscaPorUsuario(rs.getString("login")));
 				String sexoStr = rs.getString("sexo");
 				if(sexoStr == null) {
 					Sexo sexo = null;
@@ -124,11 +215,16 @@ public class UsuarioDao {
 			stmt.close();
 			return usuario;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	
-	public void altera(Usuario usuario) {
+	public Usuario busca(String login) throws SQLException {
+		return busca(login, "login");
+	}
+	
+	public void altera(Usuario usuario) throws SQLException {
 		try {
 			PreparedStatement stmt = this.connection
 					.prepareStatement("update usuario set cpf=?, dataDeCadastramento=?, "
@@ -147,11 +243,16 @@ public class UsuarioDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			if(e.getMessage().contains("Duplicate entry")) {
+				throw new SQLException(getMensagemEntradaDuplicadaAltera(usuario));
+			}
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	
-	public void alteraEndereco(Endereco endereco, String loginUsuario) {
+	public void alteraEndereco(Endereco endereco, String loginUsuario) 
+			throws SQLException {
 		if(endereco == null) {
 			endereco = new Endereco();
 			endereco.setBairro(null);
@@ -164,10 +265,9 @@ public class UsuarioDao {
 
 		} 
 		new EnderecoDao().altera(endereco, loginUsuario);
-		
 	}
 	
-	public void remove(String login) {
+	public void remove(String login) throws SQLException {
 		try {
 			PreparedStatement stmt = this.connection.
 					prepareStatement("delete from usuario "
@@ -176,7 +276,8 @@ public class UsuarioDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	

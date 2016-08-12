@@ -18,7 +18,7 @@ public class SensorDao {
 		this.connection = new ConnectionFactory().getConnection();
 	}
 	
-	public void adiciona(Sensor sensor, String usuarioLogin) {
+	public void adiciona(Sensor sensor, String usuarioLogin) throws SQLException {
 		String sql = "insert into sensor "
 				+ "(codigo, modelo, temperaturaMinima, "
 				+ "temperaturaMaxima, erro, usuario_login)"
@@ -40,11 +40,12 @@ public class SensorDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	
-	public List<Sensor> getLista() {
+	public List<Sensor> getLista() throws SQLException {
 		try {
 			List<Sensor> sensores = new ArrayList<>();
 			PreparedStatement stmt = this.connection
@@ -69,11 +70,12 @@ public class SensorDao {
 			stmt.close();
 			return sensores;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	
-	public Sensor busca(Long codigo) {
+	public Sensor busca(Long codigo) throws SQLException {
 		try {
 			PreparedStatement stmt = this.connection.
 					prepareStatement("select * from sensor "
@@ -99,11 +101,12 @@ public class SensorDao {
 			stmt.close();
 			return sensor;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	
-	public void altera(Sensor sensor) {
+	public void altera(Sensor sensor) throws SQLException {
 		try {
 			PreparedStatement stmt = this.connection
 					.prepareStatement("update sensor set erro=?,"
@@ -118,11 +121,12 @@ public class SensorDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	
-	public void remove(Long codigo) {
+	public void remove(Long codigo) throws SQLException {
 		try {
 			PreparedStatement stmt = this.connection.
 					prepareStatement("delete from sensor "
@@ -131,11 +135,12 @@ public class SensorDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	
-	public List<Sensor> buscaPorUsuario(String loginUsuario) {
+	public List<Sensor> buscaPorUsuario(String loginUsuario) throws SQLException {
 		try {
 			PreparedStatement stmt = this.connection.
 					prepareStatement("select * from sensor "
@@ -162,7 +167,8 @@ public class SensorDao {
 			stmt.close();
 			return sensores;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	

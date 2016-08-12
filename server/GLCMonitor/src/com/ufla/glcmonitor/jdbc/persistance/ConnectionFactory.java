@@ -6,9 +6,15 @@ import java.sql.SQLException;
 
 public class ConnectionFactory {
 	
-	public static String URL =  "jdbc:mysql://localhost/glcmonitortestes";
+	public static String URL =  "jdbc:mysql://localhost:3306/glcmonitortestes";
 	
 	public Connection getConnection() {
+		try {
+		    Class.forName("com.mysql.jdbc.Driver");
+		} 
+		catch (ClassNotFoundException e) {
+		    e.printStackTrace();
+		} 
         try {
             return DriverManager.getConnection(
           URL, "root", "chp123");

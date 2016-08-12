@@ -92,7 +92,7 @@
                 android:text="@string/action_register_in_short"
                 android:textStyle="bold"
                 android:focusableInTouchMode="false"
-                android:onClick="RegisterClick"
+                android:onClick="registerClick"
                 android:layout_gravity="bottom|center_horizontal" />
 
 

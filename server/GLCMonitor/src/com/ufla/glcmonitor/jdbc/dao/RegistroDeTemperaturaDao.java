@@ -19,7 +19,7 @@ public class RegistroDeTemperaturaDao {
 	}
 
 	public void adiciona(RegistroDeTemperatura registroDeTemperatura,
-			Long sensorCodigo) {
+			Long sensorCodigo) throws SQLException {
 		String sql = "insert into registroDeTemperatura "
 				+ "(temperatura, momento, sensor_codigo) "
 				+ " values (?,?,?)";
@@ -36,11 +36,12 @@ public class RegistroDeTemperaturaDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	
-	public List<RegistroDeTemperatura> busca(Long sensorCodigo) {
+	public List<RegistroDeTemperatura> busca(Long sensorCodigo) throws SQLException {
 		try {
 			List<RegistroDeTemperatura> registroDeTemperaturas = new ArrayList<>();
 			PreparedStatement stmt = this.connection
@@ -61,11 +62,37 @@ public class RegistroDeTemperaturaDao {
 			stmt.close();
 			return registroDeTemperaturas;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	
-	public void remove(Long sensorCodigo) {
+	public RegistroDeTemperatura getUltimoRegistroDeTemperatura(Long sensorCodigo) 
+			throws SQLException {
+		try {
+			RegistroDeTemperatura registroDeTemperatura = null;
+			PreparedStatement stmt = this.connection
+					.prepareStatement("select from registroDeTemperatura "
+							+ "where sensor_codigo=?");
+			stmt.setLong(1, sensorCodigo);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				// criando o objeto registroDeTemperatura
+				registroDeTemperatura = new RegistroDeTemperatura();
+				registroDeTemperatura.setTemperatura(Util
+						.getResultSetValueFloat(rs, "temperatura"));
+				registroDeTemperatura.setMomento(rs.getDate("momento"));
+			}
+			rs.close();
+			stmt.close();
+			return registroDeTemperatura;
+		} catch (SQLException e) {
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
+		}
+	}
+	
+	public void remove(Long sensorCodigo) throws SQLException {
 		try {
 			PreparedStatement stmt = this.connection.
 					prepareStatement("delete from registroDeTemperatura "
@@ -74,7 +101,8 @@ public class RegistroDeTemperaturaDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 

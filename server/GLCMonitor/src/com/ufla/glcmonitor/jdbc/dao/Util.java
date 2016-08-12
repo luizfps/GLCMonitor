@@ -8,6 +8,10 @@ import java.sql.Types;
 
 public class Util {
 	
+	private Util() {
+		
+	}
+	
 	public static void setFloatPreparedStatement(PreparedStatement stmt, 
 			int  parameterIndex, Float value) throws SQLException {
 		if(value == null) {

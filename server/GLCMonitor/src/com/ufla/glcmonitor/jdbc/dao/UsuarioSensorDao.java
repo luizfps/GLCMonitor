@@ -19,7 +19,7 @@ public class UsuarioSensorDao {
 	}
 
 	public void adiciona(UsuarioSensor usuarioSensor, String usuarioLogin,
-			Long sensorCodigo) {
+			Long sensorCodigo) throws SQLException {
 		String sql = "insert into sensor "
 				+ "(temperaturaMinima, temperaturaMaxima, "
 				+ "intervaloDeAtualizacaoDeDados, sensor_codigo, usuario_login)"
@@ -41,11 +41,12 @@ public class UsuarioSensorDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	
-	public List<UsuarioSensor> getLista() {
+	public List<UsuarioSensor> getLista() throws SQLException {
 		try {
 			List<UsuarioSensor> registroDeTemperaturas = new ArrayList<>();
 			PreparedStatement stmt = this.connection
@@ -72,11 +73,12 @@ public class UsuarioSensorDao {
 			stmt.close();
 			return registroDeTemperaturas;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	
-	public List<UsuarioSensor> buscaPorUsuario(String usuarioLogin) {
+	public List<UsuarioSensor> buscaPorUsuario(String usuarioLogin) throws SQLException {
 		try {
 			List<UsuarioSensor> registroDeTemperaturas = new ArrayList<>();
 			PreparedStatement stmt = this.connection
@@ -105,11 +107,12 @@ public class UsuarioSensorDao {
 			stmt.close();
 			return registroDeTemperaturas;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	
-	public List<UsuarioSensor> buscaPorSensor(String sensorCodigo) {
+	public List<UsuarioSensor> buscaPorSensor(String sensorCodigo) throws SQLException {
 		try {
 			List<UsuarioSensor> registroDeTemperaturas = new ArrayList<>();
 			PreparedStatement stmt = this.connection
@@ -138,12 +141,13 @@ public class UsuarioSensorDao {
 			stmt.close();
 			return registroDeTemperaturas;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	
 	public void altera(UsuarioSensor usuarioSensor, String usuarioLogin,
-			Long sensorCodigo) {
+			Long sensorCodigo) throws SQLException {
 		try {
 			PreparedStatement stmt = this.connection
 					.prepareStatement("update usuarioSensor set "
@@ -161,7 +165,8 @@ public class UsuarioSensorDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	

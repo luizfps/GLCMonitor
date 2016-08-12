@@ -1,8 +1,9 @@
 package com.ufla.glcmonitor.modelo;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Sensor {
+public class Sensor implements Serializable {
 
     private Long codigo;
     private String modelo;
