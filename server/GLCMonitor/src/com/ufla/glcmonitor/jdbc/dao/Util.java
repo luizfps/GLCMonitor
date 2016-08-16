@@ -1,13 +1,16 @@
 package com.ufla.glcmonitor.jdbc.dao;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
+import com.ufla.glcmonitor.jdbc.modelo.LimitesDeTemperatura;
+
 public class Util {
 	
+	/**Classe apenas fornece métodos estáticos.
+	 */
 	private Util() {
 		
 	}
@@ -44,9 +47,24 @@ public class Util {
 		if(data == null) {
 			stmt.setDate(parameterIndex, null);
 		} else {
-			stmt.setDate(parameterIndex, new Date(data.getTime()));
+			stmt.setDate(parameterIndex, new java.sql.Date(data.getTime()));
 		}
 	}
+	
+	public static void setLimitesDeTemperaturaPreparedStatement(
+			PreparedStatement stmt, int  parameterIndexBegin, 
+			LimitesDeTemperatura limitesDeTemperatura) throws SQLException {
+		if(limitesDeTemperatura == null) {
+			stmt.setNull(parameterIndexBegin, Types.FLOAT);
+			stmt.setNull(parameterIndexBegin+1, Types.FLOAT);
+		} else {
+			setFloatPreparedStatement(stmt, parameterIndexBegin, 
+					limitesDeTemperatura.getTemperaturaMinima());
+			setFloatPreparedStatement(stmt, parameterIndexBegin+1, 
+					limitesDeTemperatura.getTemperaturaMinima());
+		}
+	}
+	
 	
 	public static Long getResultSetValueLong(ResultSet rs, String columnLabel) 
 			throws SQLException {
@@ -74,5 +92,12 @@ public class Util {
 		}
 		return value;
 	}
-
+	
+	public static java.util.Date sqlDateToUtilDate(java.sql.Date data) {
+		if(data == null) {
+			return null;
+		}
+		return new java.util.Date(data.getTime());
+	}
+	
 }

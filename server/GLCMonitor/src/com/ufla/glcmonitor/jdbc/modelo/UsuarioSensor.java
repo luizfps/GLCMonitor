@@ -6,6 +6,10 @@ public class UsuarioSensor {
     private Integer intervaloDeAtualizacaoDeDados;
     private Usuario usuario;
     private Sensor sensor;
+    
+    public UsuarioSensor() {
+    	this.limitesDeTemperatura = new LimitesDeTemperatura();
+    }
 
     public Usuario getUsuario() {
         return usuario;

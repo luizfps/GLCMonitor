@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ufla.glcmonitor.jdbc.modelo.Endereco;
+import com.ufla.glcmonitor.jdbc.modelo.Sensor;
 import com.ufla.glcmonitor.jdbc.modelo.Sexo;
 import com.ufla.glcmonitor.jdbc.modelo.Usuario;
 import com.ufla.glcmonitor.jdbc.persistance.ConnectionFactory;
@@ -16,6 +17,8 @@ public class UsuarioDao {
 
 	private Connection connection;
 
+	/**Inicializa um objeto UsuarioDao estabelecendo uma conexão com o SGBD.
+	 */
 	public UsuarioDao() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
@@ -64,6 +67,89 @@ public class UsuarioDao {
 		return msg.toString();
 	}
 
+	@SuppressWarnings("unused")
+	private List<Usuario> buscaLista(String filtro, String campo) 
+			throws SQLException {
+		try {
+			PreparedStatement stmt = this.connection.
+					prepareStatement("select * from usuario "
+							+ "where "+campo+"=?");
+			stmt.setString(1, filtro);
+			ResultSet rs = stmt.executeQuery();
+			List<Usuario> usuarios = new ArrayList<>();
+			while(rs.next()) {
+				Usuario usuario = new Usuario();
+				usuario.setCpf(Util.getResultSetValueLong(rs, "cpf"));
+				usuario.setDataDeCadastramento(Util.sqlDateToUtilDate(rs
+						.getDate("dataDeCadastramento")));
+				usuario.setDataDeNascimento(Util.sqlDateToUtilDate(rs
+						.getDate("dataDeNascimento")));
+				usuario.setEmail(rs.getString("email"));
+				usuario.setEndereco(new EnderecoDao().busca(rs.getString("login")));
+				usuario.setLogin(rs.getString("login"));
+				usuario.setNome(rs.getString("nome"));
+				usuario.setRg(Util.getResultSetValueLong(rs, "rg"));
+				usuario.setSenha(rs.getString("senha"));
+				String sexoStr = rs.getString("sexo");
+				if(sexoStr == null) {
+					Sexo sexo = null;
+					usuario.setSexo(sexo);
+				} else {
+					usuario.setSexo(rs.getString("sexo").charAt(0));
+				}
+				usuario.setTelefone(Util.getResultSetValueLong(rs, "telefone"));
+				usuario.setSensores(new SensorDao().buscaPorUsuario(usuario));
+				usuarios.add(usuario);
+			}
+			rs.close();
+			stmt.close();
+			return usuarios;
+		} catch (SQLException e) {
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
+		}
+	}
+	
+	private Usuario busca(String filtro, String campo) throws SQLException {
+		try {
+			PreparedStatement stmt = this.connection.
+					prepareStatement("select * from usuario "
+							+ "where "+campo+"=?");
+			stmt.setString(1, filtro);
+			ResultSet rs = stmt.executeQuery();
+			Usuario usuario = null;
+			if(rs.next()) {
+				usuario = new Usuario();
+				usuario.setCpf(Util.getResultSetValueLong(rs, "cpf"));
+				usuario.setDataDeCadastramento(Util.sqlDateToUtilDate(rs
+						.getDate("dataDeCadastramento")));
+				usuario.setDataDeNascimento(Util.sqlDateToUtilDate(rs
+						.getDate("dataDeNascimento")));
+				usuario.setEmail(rs.getString("email"));
+				usuario.setEndereco(new EnderecoDao().busca(rs.getString("login")));
+				usuario.setLogin(rs.getString("login"));
+				usuario.setNome(rs.getString("nome"));
+				usuario.setRg(Util.getResultSetValueLong(rs, "rg"));
+				usuario.setSenha(rs.getString("senha"));
+				String sexoStr = rs.getString("sexo");
+				if(sexoStr == null) {
+					Sexo sexo = null;
+					usuario.setSexo(sexo);
+				} else {
+					usuario.setSexo(rs.getString("sexo").charAt(0));
+				}
+				usuario.setTelefone(Util.getResultSetValueLong(rs, "telefone"));
+				usuario.setSensores(new SensorDao().buscaPorUsuario(usuario));
+			}
+			rs.close();
+			stmt.close();
+			return usuario;
+		} catch (SQLException e) {
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
+		}
+	}
+	
 	public void adiciona(Usuario usuario) throws SQLException {
 		String sql = "insert into usuario "
 				+ "(login,senha,nome,telefone,email,rg,cpf,"
@@ -95,9 +181,14 @@ public class UsuarioDao {
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
 		}
+
 		if (usuario.getEndereco() != null) {
-			EnderecoDao enderecoDao = new EnderecoDao();
-			enderecoDao.adiciona(usuario.getEndereco(), usuario.getLogin());
+			new EnderecoDao().adiciona(usuario.getEndereco(), usuario.getLogin());
+		}
+		if(usuario.getSensores() != null) {
+			for(Sensor sensor : usuario.getSensores()) {
+				new SensorDao().adiciona(sensor, usuario.getLogin());
+			}
 		}
 	}
 
@@ -124,96 +215,19 @@ public class UsuarioDao {
 				} else {
 					usuario.setSexo(rs.getString("sexo").charAt(0));
 				}
-				usuario.setDataDeCadastramento(rs.getDate("dataDeCadastramento"));
-				usuario.setDataDeNascimento(rs.getDate("dataDeNascimento"));
+				usuario.setDataDeCadastramento(Util.sqlDateToUtilDate(rs
+						.getDate("dataDeCadastramento")));
+				usuario.setDataDeNascimento(Util.sqlDateToUtilDate(rs
+						.getDate("dataDeNascimento")));
 				usuario.setEndereco(new EnderecoDao().busca(usuario.getLogin()));
 				usuario.setSensores(new SensorDao()
-						.buscaPorUsuario(usuario.getLogin()));
+						.buscaPorUsuario(usuario));
 				// adicionando o objeto à lista
 				usuarios.add(usuario);
 			}
 			rs.close();
 			stmt.close();
 			return usuarios;
-		} catch (SQLException e) {
-			throw new SQLException(MensagensDeExcecao
-					.getMensagemDeExcecao(e.getMessage()));
-		}
-	}
-	
-	@SuppressWarnings("unused")
-	private List<Usuario> buscaLista(String filtro, String campo) 
-			throws SQLException {
-		try {
-			PreparedStatement stmt = this.connection.
-					prepareStatement("select * from usuario "
-							+ "where "+campo+"=?");
-			stmt.setString(1, filtro);
-			ResultSet rs = stmt.executeQuery();
-			List<Usuario> usuarios = new ArrayList<>();
-			while(rs.next()) {
-				Usuario usuario = new Usuario();
-				usuario.setCpf(Util.getResultSetValueLong(rs, "cpf"));
-				usuario.setDataDeCadastramento(rs.getDate("dataDeCadastramento"));
-				usuario.setDataDeNascimento(rs.getDate("dataDeNascimento"));
-				usuario.setEmail(rs.getString("email"));
-				usuario.setEndereco(new EnderecoDao().busca(rs.getString("login")));
-				usuario.setLogin(rs.getString("login"));
-				usuario.setNome(rs.getString("nome"));
-				usuario.setRg(Util.getResultSetValueLong(rs, "rg"));
-				usuario.setSenha(rs.getString("senha"));
-				usuario.setSensores(new SensorDao().buscaPorUsuario(rs.getString("login")));
-				String sexoStr = rs.getString("sexo");
-				if(sexoStr == null) {
-					Sexo sexo = null;
-					usuario.setSexo(sexo);
-				} else {
-					usuario.setSexo(rs.getString("sexo").charAt(0));
-				}
-				usuario.setTelefone(Util.getResultSetValueLong(rs, "telefone"));
-				usuarios.add(usuario);
-			}
-			rs.close();
-			stmt.close();
-			return usuarios;
-		} catch (SQLException e) {
-			throw new SQLException(MensagensDeExcecao
-					.getMensagemDeExcecao(e.getMessage()));
-		}
-	}
-	
-	private Usuario busca(String filtro, String campo) throws SQLException {
-		try {
-			PreparedStatement stmt = this.connection.
-					prepareStatement("select * from usuario "
-							+ "where "+campo+"=?");
-			stmt.setString(1, filtro);
-			ResultSet rs = stmt.executeQuery();
-			Usuario usuario = null;
-			if(rs.next()) {
-				usuario = new Usuario();
-				usuario.setCpf(Util.getResultSetValueLong(rs, "cpf"));
-				usuario.setDataDeCadastramento(rs.getDate("dataDeCadastramento"));
-				usuario.setDataDeNascimento(rs.getDate("dataDeNascimento"));
-				usuario.setEmail(rs.getString("email"));
-				usuario.setEndereco(new EnderecoDao().busca(rs.getString("login")));
-				usuario.setLogin(rs.getString("login"));
-				usuario.setNome(rs.getString("nome"));
-				usuario.setRg(Util.getResultSetValueLong(rs, "rg"));
-				usuario.setSenha(rs.getString("senha"));
-				usuario.setSensores(new SensorDao().buscaPorUsuario(rs.getString("login")));
-				String sexoStr = rs.getString("sexo");
-				if(sexoStr == null) {
-					Sexo sexo = null;
-					usuario.setSexo(sexo);
-				} else {
-					usuario.setSexo(rs.getString("sexo").charAt(0));
-				}
-				usuario.setTelefone(Util.getResultSetValueLong(rs, "telefone"));
-			}
-			rs.close();
-			stmt.close();
-			return usuario;
 		} catch (SQLException e) {
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
@@ -240,6 +254,7 @@ public class UsuarioDao {
 			stmt.setString(8, usuario.getSexoValueStr());
 			Util.setLongPreparedStatement(stmt, 9, usuario.getTelefone());
 			stmt.setString(10, usuario.getLogin());
+			alteraEndereco(usuario.getEndereco(), usuario.getLogin());
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
@@ -254,17 +269,10 @@ public class UsuarioDao {
 	public void alteraEndereco(Endereco endereco, String loginUsuario) 
 			throws SQLException {
 		if(endereco == null) {
-			endereco = new Endereco();
-			endereco.setBairro(null);
-			endereco.setCep(null);
-			endereco.setCidade(null);
-			endereco.setComplemento(null);
-			endereco.setEstado(null);
-			endereco.setLogradouro(null);
-			endereco.setNumero(null);
-
-		} 
-		new EnderecoDao().altera(endereco, loginUsuario);
+			new EnderecoDao().remove(loginUsuario);
+		} else { 
+			new EnderecoDao().altera(endereco, loginUsuario);
+		}
 	}
 	
 	public void remove(String login) throws SQLException {

@@ -10,14 +10,29 @@ import java.util.List;
 import com.ufla.glcmonitor.jdbc.modelo.RegistroDeTemperatura;
 import com.ufla.glcmonitor.jdbc.persistance.ConnectionFactory;
 
+/** A classe RegistroDeTemperaturaDao representa objetos de acesso à dados para 
+ * manipular registros de temperatura.Fornece métodos de adição, busca, e 
+ * recuperaçao de um último registro de temperatura.
+ * @author glcmonitor
+ *
+ */
 public class RegistroDeTemperaturaDao {
 	
 	private Connection connection;
 
+	/**Inicializa um objeto RegistroDeTemperaturaDao estabelecendo uma 
+	 * conexão com o SGBD.
+	 */
 	public RegistroDeTemperaturaDao() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
 
+	/**Adiciona um registro de temperatura de um sensor no banco de dados. 
+	 * @param registroDeTemperatura registro de temperatura.
+	 * @param sensorCodigo sensor relacionado ao registro de temperatura.
+	 * @throws SQLException exceção relacionada a problemas em adicionar 
+	 * registro de temperatura no BD.
+	 */
 	public void adiciona(RegistroDeTemperatura registroDeTemperatura,
 			Long sensorCodigo) throws SQLException {
 		String sql = "insert into registroDeTemperatura "
@@ -41,6 +56,13 @@ public class RegistroDeTemperaturaDao {
 		}
 	}
 	
+	/**Busca todos registros de temperatura de um determinado sensor no 
+	 * banco de dados. 
+	 * @param sensorCodigo sensor relacionado aos registros de temperatura.
+	 * @return todos registros de temperatura do sensor.
+	 * @throws SQLException exceção relacionada a problemas em buscar 
+	 * registro de temperatura no BD.
+	 */
 	public List<RegistroDeTemperatura> busca(Long sensorCodigo) throws SQLException {
 		try {
 			List<RegistroDeTemperatura> registroDeTemperaturas = new ArrayList<>();
@@ -67,6 +89,13 @@ public class RegistroDeTemperaturaDao {
 		}
 	}
 	
+	/**Busca o último registro de temperatura de um determinado sensor no 
+	 * banco de dados. 
+	 * @param sensorCodigo sensor relacionado ao registro de temperatura.
+	 * @return último registro de temperatura do sensor.
+	 * @throws SQLException exceção relacionada a problemas em buscar 
+	 * registro de temperatura no BD.
+	 */
 	public RegistroDeTemperatura getUltimoRegistroDeTemperatura(Long sensorCodigo) 
 			throws SQLException {
 		try {
@@ -92,18 +121,4 @@ public class RegistroDeTemperaturaDao {
 		}
 	}
 	
-	public void remove(Long sensorCodigo) throws SQLException {
-		try {
-			PreparedStatement stmt = this.connection.
-					prepareStatement("delete from registroDeTemperatura "
-							+ "where sensor_codigo=?");
-			stmt.setLong(1, sensorCodigo);
-			stmt.execute();
-			stmt.close();
-		} catch (SQLException e) {
-			throw new SQLException(MensagensDeExcecao
-					.getMensagemDeExcecao(e.getMessage()));
-		}
-	}
-
 }

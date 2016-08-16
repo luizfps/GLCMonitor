@@ -76,7 +76,7 @@ public class UsuarioDaoTeste {
 	@Test
 	public void adicionaUsuarioAtrNullTeste() throws SQLException {
 		usuarioDao.adiciona(UtilTestes.getUsuario(null, null, null, null, null, "login", 
-				null, null, null, null, null, null));
+				null, null, null, new ArrayList<>(), null, null));
 		List<Usuario> usuarios = usuarioDao.getLista();
 		assertEquals(1, usuarios.size());
 	}
@@ -84,7 +84,7 @@ public class UsuarioDaoTeste {
 	@Test
 	public void adicionaEBuscaUsuarioAtrNullTeste() throws SQLException {
 		usuarioDao.adiciona(usuario1 = UtilTestes.getUsuario(null, null, null, null, 
-				null, "login", null, null, null, null, null, null));
+				null, "login", null, null, null, new ArrayList<>(), null, null));
 		Usuario usuarioEsperado = usuarioDao.busca("login");
 		assertEquals(usuarioEsperado, usuario1);
 	}
@@ -304,6 +304,7 @@ public class UsuarioDaoTeste {
 		usuarioDao.adiciona(usuario1);
 		usuarioDao.adiciona(usuario2);
 		usuarioDao.adiciona(usuario3);
+		
 		List<Usuario> usuarios = usuarioDao.getLista();
 		assertEquals(3, usuarios.size());
 	}
@@ -313,14 +314,11 @@ public class UsuarioDaoTeste {
 		usuarioDao.adiciona(usuario1);
 		usuarioDao.adiciona(usuario2);
 		usuarioDao.adiciona(usuario3);
-		Usuario usuarioEsperado = usuarioDao.busca("teste1@email.com");
-		assertEquals(usuarioEsperado, usuario1);
-		usuarioEsperado = usuarioDao.busca("teste2@email.com");
-		assertEquals(usuarioEsperado, usuario2);
-		usuarioEsperado = usuarioDao.busca("teste@email.com");
-		assertEquals(null, usuarioEsperado);
-		usuarioEsperado = usuarioDao.busca("teste3@email.com");
-		assertEquals(usuarioEsperado, usuario3);
+		
+		assertEquals(usuario1, usuarioDao.busca("teste1@email.com"));
+		assertEquals(usuario2, usuarioDao.busca("teste2@email.com"));
+		assertEquals(null, usuarioDao.busca("teste@email.com"));
+		assertEquals(usuario3, usuarioDao.busca("teste3@email.com"));
 	}
 	
 	@Test
@@ -329,6 +327,7 @@ public class UsuarioDaoTeste {
 		usuarioDao.adiciona(usuario2);
 		usuarioDao.adiciona(usuario3);
 		usuarioDao.remove("teste@email.com");
+		
 		List<Usuario> usuarios = usuarioDao.getLista();
 		assertEquals(3, usuarios.size());
 		usuarioDao.remove("teste1@email.com");
@@ -346,7 +345,7 @@ public class UsuarioDaoTeste {
 	public void alteraTeste() throws SQLException {
 		usuarioDao.adiciona(usuario1);
 		usuario1 = UtilTestes.getUsuario(213213L, null, null, "ola@email.com", null, 
-				usuario1.getLogin(), "ola", 21313L, "123456", null, null, 
+				usuario1.getLogin(), "ola", 21313L, "123456", new ArrayList<>(), null, 
 				12731241341L);
 		usuarioDao.altera(usuario1);
 		assertEquals(usuario1, usuarioDao.busca(usuario1.getLogin()));
@@ -356,7 +355,7 @@ public class UsuarioDaoTeste {
 	public void alteraNullTeste() throws SQLException {
 		usuarioDao.adiciona(usuario1);
 		usuario1 = UtilTestes.getUsuario(null, null, null, null, null, 
-				usuario1.getLogin(), null, null, null, null, null, 
+				usuario1.getLogin(), null, null, null, new ArrayList<>(), null, 
 				null);
 		usuarioDao.altera(usuario1);
 		assertEquals(usuario1, usuarioDao.busca(usuario1.getLogin()));

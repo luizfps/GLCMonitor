@@ -8,14 +8,27 @@ import java.sql.SQLException;
 import com.ufla.glcmonitor.jdbc.modelo.Endereco;
 import com.ufla.glcmonitor.jdbc.persistance.ConnectionFactory;
 
+/** A classe EnderecoDao representa objetos de acesso à dados para manipular endereços.
+ * Fornece métodos de adição, busca, e alteração de endereços.
+ * @author glcmonitor
+ *
+ */
 public class EnderecoDao {
 	
 	private Connection connection;
 	
+	/**Inicializa um objeto EnderecoDao estabelecendo uma conexão com o SGBD.
+	 */
 	protected EnderecoDao() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
 	
+	/**Adiciona um endereço de um usuário no banco de dados. 
+	 * @param endereco endereço adicionado.
+	 * @param loginUsuario login do usuário relacionado ao endereço.
+	 * @throws SQLException exceção relacionada a problemas em adicionar 
+	 * endereço no BD.
+	 */
 	protected void adiciona(Endereco endereco, String loginUsuario) 
 			throws SQLException {
 		String sql = "insert into endereco "
@@ -39,11 +52,17 @@ public class EnderecoDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			throw new SQLException(MensagensDeExcecao
-					.getMensagemDeExcecao(e.getMessage()));
+			//throw new SQLException(MensagensDeExcecao
+			//		.getMensagemDeExcecao(e.getMessage()));
 		}
 	}
 	
+	/**Busca o endereço de um usuário no banco de dados.
+	 * @param usuarioLogin login do usuário relacionado ao endereço. 
+	 * @return endereço do usuário.
+	 * @throws SQLException exceção relacionada a problemas em buscar 
+	 * endereço no BD.
+	 */
 	protected Endereco busca(String usuarioLogin) throws SQLException {
 		try {
 			PreparedStatement stmt = this.connection.
@@ -72,6 +91,12 @@ public class EnderecoDao {
 		}
 	}
 	
+	/**Altera o endereço de um usuário no banco de dados.
+	 * @param endereco novo endereço.
+	 * @param loginUsuario login do usuário relacionado ao endereço.
+	 * @throws SQLException exceção relacionada a problemas em alterar 
+	 * endereço no BD.
+	 */
 	protected void altera(Endereco endereco, String loginUsuario) 
 			throws SQLException {
 		try {
@@ -86,6 +111,20 @@ public class EnderecoDao {
 			stmt.setString(6, endereco.getLogradouro());
 			Util.setIntegerPreparedStatement(stmt, 7, endereco.getNumero());
 			stmt.setString(8, loginUsuario);
+			stmt.execute();
+			stmt.close();
+		} catch (SQLException e) {
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
+		}
+	}
+	
+	public void remove(String loginUsuario) throws SQLException {
+		try {
+			PreparedStatement stmt = this.connection.
+					prepareStatement("delete from endereco "
+							+ "where usuario_login=?");
+			stmt.setString(1, loginUsuario);
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {

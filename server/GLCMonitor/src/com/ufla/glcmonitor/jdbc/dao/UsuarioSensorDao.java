@@ -5,8 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import com.ufla.glcmonitor.jdbc.modelo.Sensor;
+import com.ufla.glcmonitor.jdbc.modelo.Usuario;
 import com.ufla.glcmonitor.jdbc.modelo.UsuarioSensor;
 import com.ufla.glcmonitor.jdbc.persistance.ConnectionFactory;
 
@@ -14,6 +17,8 @@ public class UsuarioSensorDao {
 	
 	private Connection connection;
 
+	/**Inicializa um objeto UsuarioSensorDao estabelecendo uma conexão com o SGBD.
+	 */
 	public UsuarioSensorDao() {
 		this.connection = new ConnectionFactory().getConnection();
 	}
@@ -29,10 +34,8 @@ public class UsuarioSensorDao {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 
 			// seta os valores
-			Util.setFloatPreparedStatement(stmt, 1, usuarioSensor
-					.getTemperaturaMinima());
-			Util.setFloatPreparedStatement(stmt, 2, usuarioSensor
-					.getTemperaturaMaxima());
+			Util.setLimitesDeTemperaturaPreparedStatement(stmt, 1, 
+					usuarioSensor.getLimitesDeTemperatura());
 			Util.setIntegerPreparedStatement(stmt, 3, usuarioSensor
 					.getIntervaloDeAtualizacaoDeDados());
 			stmt.setLong(4, sensorCodigo);
@@ -48,12 +51,15 @@ public class UsuarioSensorDao {
 	
 	public List<UsuarioSensor> getLista() throws SQLException {
 		try {
-			List<UsuarioSensor> registroDeTemperaturas = new ArrayList<>();
+			List<UsuarioSensor> usarioSensores = new ArrayList<>();
 			PreparedStatement stmt = this.connection
 					.prepareStatement("select * from usuarioSensor ");
 			ResultSet rs = stmt.executeQuery();
+			List<Usuario> usuarios = new UsuarioDao().getLista();
+			Collections.sort(usuarios);
+			Usuario usuario = new Usuario();
 			while (rs.next()) {
-				// criando o objeto registroDeTemperatura
+				// criando o objeto usarioSensor
 				UsuarioSensor usuarioSensor = new UsuarioSensor();
 				usuarioSensor.setTemperaturaMinima(Util
 						.getResultSetValueFloat(rs, "temperaturaMinima"));
@@ -62,16 +68,17 @@ public class UsuarioSensorDao {
 				usuarioSensor.setIntervaloDeAtualizacaoDeDados(Util
 						.getResultSetValueInteger(rs, 
 								"intervaloDeAtualizacaoDeDados"));
-				usuarioSensor.setSensor(new SensorDao().busca(rs
-						.getLong("sensor_codigo")));
-				usuarioSensor.setUsuario(new UsuarioDao().busca(rs
-						.getString("usuario_login")));
+				usuario.setLogin(rs.getString("usuario_login"));
+				usuario = usuarios.get(Collections.binarySearch(usuarios, usuario));
+				usuarioSensor.setSensor(usuario.getSensor(Long.parseLong(rs
+						.getString("usuario_login"))));
+				usuarioSensor.setUsuario(usuario);
 				// adicionando o objeto à lista
-				registroDeTemperaturas.add(usuarioSensor);
+				usarioSensores.add(usuarioSensor);
 			}
 			rs.close();
 			stmt.close();
-			return registroDeTemperaturas;
+			return usarioSensores;
 		} catch (SQLException e) {
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
@@ -86,7 +93,13 @@ public class UsuarioSensorDao {
 							"where login_usuario=?");
 			stmt.setString(1, usuarioLogin);
 			ResultSet rs = stmt.executeQuery();
+			Usuario usuario = null;
+			boolean primeiro = true;
 			while (rs.next()) {
+				if(primeiro) {
+					usuario = new UsuarioDao().busca(rs.getString("usuario_login"));
+					primeiro = false;
+				}
 				// criando o objeto registroDeTemperatura
 				UsuarioSensor usuarioSensor = new UsuarioSensor();
 				usuarioSensor.setTemperaturaMinima(Util
@@ -96,10 +109,9 @@ public class UsuarioSensorDao {
 				usuarioSensor.setIntervaloDeAtualizacaoDeDados(Util
 						.getResultSetValueInteger(rs, 
 								"intervaloDeAtualizacaoDeDados"));
-				usuarioSensor.setSensor(new SensorDao().busca(rs
-						.getLong("sensor_codigo")));
-				usuarioSensor.setUsuario(new UsuarioDao().busca(rs
-						.getString("usuario_login")));
+				usuarioSensor.setSensor(usuario.getSensor(Long.parseLong(rs
+						.getString("usuario_login"))));
+				usuarioSensor.setUsuario(usuario);
 				// adicionando o objeto à lista
 				registroDeTemperaturas.add(usuarioSensor);
 			}
@@ -112,17 +124,16 @@ public class UsuarioSensorDao {
 		}
 	}
 	
-	public List<UsuarioSensor> buscaPorSensor(String sensorCodigo) throws SQLException {
+	public UsuarioSensor buscaPorSensor(String sensorCodigo) throws SQLException {
 		try {
-			List<UsuarioSensor> registroDeTemperaturas = new ArrayList<>();
+			UsuarioSensor usuarioSensor = null;
 			PreparedStatement stmt = this.connection
 					.prepareStatement("select * from usuarioSensor " +
 							"where sensor_codigo=?");
 			stmt.setString(1, sensorCodigo);
 			ResultSet rs = stmt.executeQuery();
-			while (rs.next()) {
-				// criando o objeto registroDeTemperatura
-				UsuarioSensor usuarioSensor = new UsuarioSensor();
+			if (rs.next()) {
+				usuarioSensor = new UsuarioSensor();
 				usuarioSensor.setTemperaturaMinima(Util
 						.getResultSetValueFloat(rs, "temperaturaMinima"));
 				usuarioSensor.setTemperaturaMaxima(Util
@@ -130,16 +141,14 @@ public class UsuarioSensorDao {
 				usuarioSensor.setIntervaloDeAtualizacaoDeDados(Util
 						.getResultSetValueInteger(rs, 
 								"intervaloDeAtualizacaoDeDados"));
-				usuarioSensor.setSensor(new SensorDao().busca(rs
-						.getLong("sensor_codigo")));
-				usuarioSensor.setUsuario(new UsuarioDao().busca(rs
-						.getString("usuario_login")));
-				// adicionando o objeto à lista
-				registroDeTemperaturas.add(usuarioSensor);
+				Sensor sensor = new SensorDao().busca(rs
+						.getLong("sensor_codigo"));
+				usuarioSensor.setSensor(sensor);
+				usuarioSensor.setUsuario(sensor.getUsuario());
 			}
 			rs.close();
 			stmt.close();
-			return registroDeTemperaturas;
+			return usuarioSensor;
 		} catch (SQLException e) {
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
@@ -154,10 +163,8 @@ public class UsuarioSensorDao {
 							+ "temperaturaMinima=?, temperaturaMaxima=?, "
 							+ "intervaloDeAtualizacaoDeDados=? "
 							+ "where usuario_login=? and sensor_codigo");
-			Util.setFloatPreparedStatement(stmt, 1, usuarioSensor
-					.getTemperaturaMinima());
-			Util.setFloatPreparedStatement(stmt, 2, usuarioSensor
-					.getTemperaturaMaxima());
+			Util.setLimitesDeTemperaturaPreparedStatement(stmt, 1, 
+					usuarioSensor.getLimitesDeTemperatura());
 			Util.setIntegerPreparedStatement(stmt, 3, usuarioSensor
 					.getIntervaloDeAtualizacaoDeDados());
 			stmt.setString(4, usuarioLogin);

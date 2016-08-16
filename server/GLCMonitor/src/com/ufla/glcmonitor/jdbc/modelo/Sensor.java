@@ -1,8 +1,9 @@
 package com.ufla.glcmonitor.jdbc.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Sensor {
+public class Sensor implements Comparable<Sensor> {
 
     private Long codigo;
     private String modelo;
@@ -11,6 +12,11 @@ public class Sensor {
     private Usuario usuario;
     private List<RegistroDeTemperatura> registrosDeTemperatura;
 
+    public Sensor() {
+    	super();
+    	this.faixaDeOperacao = new LimitesDeTemperatura();
+    	this.registrosDeTemperatura = new ArrayList<>();
+    }
     public Usuario getUsuario() {
         return usuario;
     }
@@ -111,6 +117,15 @@ public class Sensor {
 				+ ", faixaDeOperacao=" + faixaDeOperacao + ", erro="
 				+ erro + ", usuario=" + usuario + ", registrosDeTemperatura=" 
 				+ registrosDeTemperatura + "]";
+	}
+	@Override
+	public int compareTo(Sensor outroSensor) {
+		if(this.codigo > outroSensor.codigo) {
+			return 1;
+		} else if (this.codigo < outroSensor.codigo) {
+			return -1;
+		}
+		return 0;
 	}
 	
 }
