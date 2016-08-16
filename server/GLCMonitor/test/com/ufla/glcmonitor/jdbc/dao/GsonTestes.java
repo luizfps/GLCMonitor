@@ -46,6 +46,8 @@ public class GsonTestes {
 	public void getListaSemUsuariosTeste() {
 		String usuarioJson = gson.toJson(usuario1, Usuario.class);
 		System.out.println(usuarioJson);
+		System.out.println(usuario1);
+		System.out.println(gson.fromJson(usuarioJson, Usuario.class));
 		assertEquals(usuario1, gson.fromJson(usuarioJson, Usuario.class));
 	}
 

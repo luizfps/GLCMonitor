@@ -23,9 +23,10 @@ public class RegistroDeTemperaturaDao {
 	/**Inicializa um objeto RegistroDeTemperaturaDao estabelecendo uma 
 	 * conexão com o SGBD.
 	 */
-	public RegistroDeTemperaturaDao() {
+	
+	/*public RegistroDeTemperaturaDao() {
 		this.connection = new ConnectionFactory().getConnection();
-	}
+	}*/
 
 	/**Adiciona um registro de temperatura de um sensor no banco de dados. 
 	 * @param registroDeTemperatura registro de temperatura.
@@ -38,6 +39,7 @@ public class RegistroDeTemperaturaDao {
 		String sql = "insert into registroDeTemperatura "
 				+ "(temperatura, momento, sensor_codigo) "
 				+ " values (?,?,?)";
+		this.connection = new ConnectionFactory().getConnection();
 		try {
 			// prepared statement para inserção
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -53,6 +55,8 @@ public class RegistroDeTemperaturaDao {
 		} catch (SQLException e) {
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
+		}finally {
+			this.connection.close();
 		}
 	}
 	
@@ -64,6 +68,7 @@ public class RegistroDeTemperaturaDao {
 	 * registro de temperatura no BD.
 	 */
 	public List<RegistroDeTemperatura> busca(Long sensorCodigo) throws SQLException {
+		this.connection = new ConnectionFactory().getConnection();
 		try {
 			List<RegistroDeTemperatura> registroDeTemperaturas = new ArrayList<>();
 			PreparedStatement stmt = this.connection
@@ -86,6 +91,8 @@ public class RegistroDeTemperaturaDao {
 		} catch (SQLException e) {
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
+		}finally {
+			this.connection.close();
 		}
 	}
 	
@@ -98,6 +105,7 @@ public class RegistroDeTemperaturaDao {
 	 */
 	public RegistroDeTemperatura getUltimoRegistroDeTemperatura(Long sensorCodigo) 
 			throws SQLException {
+		this.connection = new ConnectionFactory().getConnection();
 		try {
 			RegistroDeTemperatura registroDeTemperatura = null;
 			PreparedStatement stmt = this.connection
@@ -118,6 +126,8 @@ public class RegistroDeTemperaturaDao {
 		} catch (SQLException e) {
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
+		}finally {
+			this.connection.close();
 		}
 	}
 	

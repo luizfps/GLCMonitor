@@ -53,6 +53,7 @@ public class UsuarioDaoTeste {
     			prepareStatement("delete from usuario");
     	stmt.execute();
     	stmt.close();
+    	connection.close();
 	}
 
 

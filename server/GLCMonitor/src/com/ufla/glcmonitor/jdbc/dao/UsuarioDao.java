@@ -19,9 +19,9 @@ public class UsuarioDao {
 
 	/**Inicializa um objeto UsuarioDao estabelecendo uma conexão com o SGBD.
 	 */
-	public UsuarioDao() {
+	/*public UsuarioDao() {
 		this.connection = new ConnectionFactory().getConnection();
-	}
+	}*/
 	
 	private String getMensagemEntradaDuplicadaAdiciona(Usuario usuario) 
 			throws SQLException {
@@ -70,6 +70,7 @@ public class UsuarioDao {
 	@SuppressWarnings("unused")
 	private List<Usuario> buscaLista(String filtro, String campo) 
 			throws SQLException {
+		this.connection = new ConnectionFactory().getConnection();
 		try {
 			PreparedStatement stmt = this.connection.
 					prepareStatement("select * from usuario "
@@ -107,11 +108,15 @@ public class UsuarioDao {
 		} catch (SQLException e) {
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
+		} finally {
+			this.connection.close();
 		}
 	}
 	
 	private Usuario busca(String filtro, String campo) throws SQLException {
+		this.connection = new ConnectionFactory().getConnection();
 		try {
+		
 			PreparedStatement stmt = this.connection.
 					prepareStatement("select * from usuario "
 							+ "where "+campo+"=?");
@@ -143,10 +148,13 @@ public class UsuarioDao {
 			}
 			rs.close();
 			stmt.close();
+
 			return usuario;
 		} catch (SQLException e) {
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
+		} finally {
+			this.connection.close();
 		}
 	}
 	
@@ -155,6 +163,7 @@ public class UsuarioDao {
 				+ "(login,senha,nome,telefone,email,rg,cpf,"
 				+ "sexo,dataDeCadastramento,dataDeNascimento)"
 				+ " values (?,?,?,?,?,?,?,?,?,?)";
+		this.connection = new ConnectionFactory().getConnection();
 		try {
 			// prepared statement para inserção
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -180,6 +189,8 @@ public class UsuarioDao {
 			}
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
+		} finally {
+			this.connection.close();
 		}
 
 		if (usuario.getEndereco() != null) {
@@ -193,6 +204,7 @@ public class UsuarioDao {
 	}
 
 	public List<Usuario> getLista() throws SQLException {
+		this.connection = new ConnectionFactory().getConnection();
 		try {
 			List<Usuario> usuarios = new ArrayList<>();
 			PreparedStatement stmt = this.connection
@@ -231,6 +243,8 @@ public class UsuarioDao {
 		} catch (SQLException e) {
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
+		} finally {
+			this.connection.close();
 		}
 	}
 	
@@ -239,6 +253,7 @@ public class UsuarioDao {
 	}
 	
 	public void altera(Usuario usuario) throws SQLException {
+		this.connection = new ConnectionFactory().getConnection();
 		try {
 			PreparedStatement stmt = this.connection
 					.prepareStatement("update usuario set cpf=?, dataDeCadastramento=?, "
@@ -263,6 +278,8 @@ public class UsuarioDao {
 			}
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
+		} finally {
+			this.connection.close();
 		}
 	}
 	
@@ -276,6 +293,7 @@ public class UsuarioDao {
 	}
 	
 	public void remove(String login) throws SQLException {
+		this.connection = new ConnectionFactory().getConnection();
 		try {
 			PreparedStatement stmt = this.connection.
 					prepareStatement("delete from usuario "
@@ -286,6 +304,8 @@ public class UsuarioDao {
 		} catch (SQLException e) {
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
+		} finally {
+			this.connection.close();
 		}
 	}
 	

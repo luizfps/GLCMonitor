@@ -19,9 +19,9 @@ public class EnderecoDao {
 	
 	/**Inicializa um objeto EnderecoDao estabelecendo uma conexão com o SGBD.
 	 */
-	protected EnderecoDao() {
+	/*protected EnderecoDao() {
 		this.connection = new ConnectionFactory().getConnection();
-	}
+	}*/
 	
 	/**Adiciona um endereço de um usuário no banco de dados. 
 	 * @param endereco endereço adicionado.
@@ -35,6 +35,7 @@ public class EnderecoDao {
 				+ "(logradouro,numero,complemento,bairro,"
 				+ "cidade,estado,cep,usuario_login)"
 				+ " values (?,?,?,?,?,?,?,?)";
+		this.connection = new ConnectionFactory().getConnection();
 		try {
 			// prepared statement para inserção
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -52,8 +53,10 @@ public class EnderecoDao {
 			stmt.execute();
 			stmt.close();
 		} catch (SQLException e) {
-			//throw new SQLException(MensagensDeExcecao
-			//		.getMensagemDeExcecao(e.getMessage()));
+			throw new SQLException(MensagensDeExcecao
+					.getMensagemDeExcecao(e.getMessage()));
+		} finally {
+			this.connection.close();
 		}
 	}
 	
@@ -64,6 +67,7 @@ public class EnderecoDao {
 	 * endereço no BD.
 	 */
 	protected Endereco busca(String usuarioLogin) throws SQLException {
+		this.connection = new ConnectionFactory().getConnection();
 		try {
 			PreparedStatement stmt = this.connection.
 					prepareStatement("select * from endereco "
@@ -88,6 +92,8 @@ public class EnderecoDao {
 		} catch (SQLException e) {
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
+		} finally {
+			this.connection.close();
 		}
 	}
 	
@@ -99,6 +105,7 @@ public class EnderecoDao {
 	 */
 	protected void altera(Endereco endereco, String loginUsuario) 
 			throws SQLException {
+		this.connection = new ConnectionFactory().getConnection();
 		try {
 			PreparedStatement stmt = this.connection
 					.prepareStatement("update endereco set bairro=?, cep=?, cidade=?," +
@@ -116,10 +123,13 @@ public class EnderecoDao {
 		} catch (SQLException e) {
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
+		} finally {
+			this.connection.close();
 		}
 	}
 	
 	public void remove(String loginUsuario) throws SQLException {
+		this.connection = new ConnectionFactory().getConnection();
 		try {
 			PreparedStatement stmt = this.connection.
 					prepareStatement("delete from endereco "
@@ -130,6 +140,8 @@ public class EnderecoDao {
 		} catch (SQLException e) {
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
+		} finally {
+			this.connection.close();
 		}
 	}
 	

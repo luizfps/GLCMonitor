@@ -19,9 +19,9 @@ public class UsuarioSensorDao {
 
 	/**Inicializa um objeto UsuarioSensorDao estabelecendo uma conexão com o SGBD.
 	 */
-	public UsuarioSensorDao() {
+	/*public UsuarioSensorDao() {
 		this.connection = new ConnectionFactory().getConnection();
-	}
+	}*/
 
 	public void adiciona(UsuarioSensor usuarioSensor, String usuarioLogin,
 			Long sensorCodigo) throws SQLException {
@@ -29,6 +29,7 @@ public class UsuarioSensorDao {
 				+ "(temperaturaMinima, temperaturaMaxima, "
 				+ "intervaloDeAtualizacaoDeDados, sensor_codigo, usuario_login)"
 				+ " values (?,?,?,?,?)";
+		this.connection = new ConnectionFactory().getConnection();
 		try {
 			// prepared statement para inserção
 			PreparedStatement stmt = connection.prepareStatement(sql);
@@ -46,10 +47,13 @@ public class UsuarioSensorDao {
 		} catch (SQLException e) {
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
+		}finally {
+			this.connection.close();
 		}
 	}
 	
 	public List<UsuarioSensor> getLista() throws SQLException {
+		this.connection = new ConnectionFactory().getConnection();
 		try {
 			List<UsuarioSensor> usarioSensores = new ArrayList<>();
 			PreparedStatement stmt = this.connection
@@ -82,10 +86,13 @@ public class UsuarioSensorDao {
 		} catch (SQLException e) {
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
+		}finally {
+			this.connection.close();
 		}
 	}
 	
 	public List<UsuarioSensor> buscaPorUsuario(String usuarioLogin) throws SQLException {
+		this.connection = new ConnectionFactory().getConnection();
 		try {
 			List<UsuarioSensor> registroDeTemperaturas = new ArrayList<>();
 			PreparedStatement stmt = this.connection
@@ -121,10 +128,13 @@ public class UsuarioSensorDao {
 		} catch (SQLException e) {
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
+		}finally {
+			this.connection.close();
 		}
 	}
 	
 	public UsuarioSensor buscaPorSensor(String sensorCodigo) throws SQLException {
+		this.connection = new ConnectionFactory().getConnection();
 		try {
 			UsuarioSensor usuarioSensor = null;
 			PreparedStatement stmt = this.connection
@@ -152,11 +162,14 @@ public class UsuarioSensorDao {
 		} catch (SQLException e) {
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
+		}finally {
+			this.connection.close();
 		}
 	}
 	
 	public void altera(UsuarioSensor usuarioSensor, String usuarioLogin,
 			Long sensorCodigo) throws SQLException {
+		this.connection = new ConnectionFactory().getConnection();
 		try {
 			PreparedStatement stmt = this.connection
 					.prepareStatement("update usuarioSensor set "
@@ -174,6 +187,8 @@ public class UsuarioSensorDao {
 		} catch (SQLException e) {
 			throw new SQLException(MensagensDeExcecao
 					.getMensagemDeExcecao(e.getMessage()));
+		}finally {
+			this.connection.close();
 		}
 	}
 	
