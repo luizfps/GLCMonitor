@@ -1,11 +1,11 @@
-package com.ufla.glcmonitor.core;
+package com.ufla.glcmonitor.conection;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 
-public class DBcore extends SQLiteOpenHelper {
+public class LocalDatabaseConection extends SQLiteOpenHelper {
 
     private static final String NAME_DB = "DB_GLC_Monitor";
     private static final int VERSION_DB = 1;
@@ -15,7 +15,7 @@ public class DBcore extends SQLiteOpenHelper {
 
     /*Construtor cria o banco */
 
-    public DBcore(Context context){
+    public LocalDatabaseConection(Context context){
         super(context, NAME_DB, null, VERSION_DB);
     }
 

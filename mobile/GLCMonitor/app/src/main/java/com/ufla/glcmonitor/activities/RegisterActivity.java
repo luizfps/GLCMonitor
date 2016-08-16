@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.ufla.glcmonitor.conection.RemoteDatabaseConection;
 import com.ufla.glcmonitor.modelo.Usuario;
 
 import java.io.BufferedReader;
@@ -75,48 +76,23 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(String... params) {
             try {
-
-                URL url = new URL("http://192.168.56.1:8081/GLCMonitor/cadastrarUsuario.jsp");
-
-                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-                String urlParameters = "usuario="+gson.toJson(usuario, Usuario.class);
-                connection.setRequestMethod("POST");
-                connection.setRequestProperty("USER-AGENT", "Mozilla/5.0");
-                connection.setRequestProperty("ACCEPT-LANGUAGE", "en-US,en;0.5");
-                connection.setDoOutput(true);
-                DataOutputStream dStream = new DataOutputStream(connection.getOutputStream());
-                dStream.writeBytes(urlParameters);
-                dStream.flush();
-                dStream.close();
-                //int responseCode = connection.getResponseCode();
-
-                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String line = null;
-                final StringBuilder responseOutput = new StringBuilder();
-                while((line = br.readLine()) != null ) {
-                    responseOutput.append(line);
-                }
-                br.close();
+                final String msg = RemoteDatabaseConection.remoteRegisterUserDatabase(usuario);
 
                 RegisterActivity.this.runOnUiThread(new Runnable() {
 
                     @Override
                     public void run() {
-                        System.out.println(responseOutput.toString());
-                        if(responseOutput.toString().equals("Sucesso!")) {
+                        if(msg.equals("Sucesso!")) {
                             Intent intent = new Intent(RegisterActivity.this, HomeActivity.class);
                             intent.putExtra("usuario", usuario);
                             startActivity(intent);
                         } else {
-                            Toast.makeText(context,responseOutput.toString(),
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;

@@ -3,7 +3,6 @@ package com.ufla.glcmonitor.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -32,17 +31,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
+import com.ufla.glcmonitor.conection.RemoteDatabaseConection;
 import com.ufla.glcmonitor.modelo.Usuario;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -386,11 +377,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         */
 
         final Context context;
-        private Gson gson;
 
         public Post(Context c){
             this.context = c;
-            this.gson = new Gson();
         }
 
 //        protected void onPreExecute(){
@@ -401,49 +390,28 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Void doInBackground(String... params) {
+
             try {
 
-                URL url = new URL("http://192.168.56.1:8081/GLCMonitor/logar.jsp");
-
-                HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-                String urlParameters = "usuario="+gson.toJson(usuario, Usuario.class);
-                connection.setRequestMethod("POST");
-                connection.setRequestProperty("USER-AGENT", "Mozilla/5.0");
-                connection.setRequestProperty("ACCEPT-LANGUAGE", "en-US,en;0.5");
-                connection.setDoOutput(true);
-                DataOutputStream dStream = new DataOutputStream(connection.getOutputStream());
-                dStream.writeBytes(urlParameters);
-                dStream.flush();
-                dStream.close();
-                //int responseCode = connection.getResponseCode();
-
-                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String line = null;
-                final StringBuilder responseOutput = new StringBuilder();
-                while((line = br.readLine()) != null ) {
-                    responseOutput.append(line);
-                }
-                br.close();
-
+                final String msg = RemoteDatabaseConection.remoteLoginDatabase(usuario);
                 LoginActivity.this.runOnUiThread(new Runnable() {
 
                     @Override
                     public void run() {
-                        System.out.println(responseOutput.toString());
-                        if(responseOutput.toString().equals("Sucesso!")) {
+//                      System.out.println(responseOutput.toString());
+                        if(msg.equals("Sucesso!")) {
                             homeClick(getCurrentFocus());
-                        } else {
-                            Toast.makeText(context,responseOutput.toString(),
-                                    Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Toast.makeText(context,msg,Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
 
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
+
             return null;
         }
 
