@@ -12,11 +12,13 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.ufla.glcmonitor.jdbc.modelo.Sensor;
 import com.ufla.glcmonitor.jdbc.modelo.Sexo;
 import com.ufla.glcmonitor.jdbc.modelo.Usuario;
+import com.ufla.glcmonitor.jdbc.persistance.ConnectionConfiguration;
 import com.ufla.glcmonitor.jdbc.persistance.ConnectionFactory;
 
 public class SensorDaoTeste {
@@ -32,8 +34,14 @@ public class SensorDaoTeste {
 	private Sensor sensor3;
 	private SensorDao sensorDao;
 
+	@BeforeClass
+	public static void setBDURL() {
+		ConnectionConfiguration.URL = ConnectionConfiguration.URL_TESTES;
+	}
+	
 	@Before
 	public void inicializa() throws SQLException {
+		ConnectionConfiguration.URL = ConnectionConfiguration.URL_TESTES;
 		usuario1 = UtilTestes
 				.getUsuario(23522342L, new Date(1000000000L), new Date(100L), "teste1@email.com",
 						UtilTestes.getEndereco("Centro", 37200000L, "Lavras", null, "MG", "Rua A",

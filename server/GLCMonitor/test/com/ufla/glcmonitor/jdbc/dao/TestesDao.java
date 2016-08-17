@@ -5,10 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
+import com.ufla.glcmonitor.jdbc.persistance.ConnectionConfiguration;
 import com.ufla.glcmonitor.jdbc.persistance.ConnectionFactory;
 
 @RunWith(Suite.class)
@@ -16,6 +18,11 @@ import com.ufla.glcmonitor.jdbc.persistance.ConnectionFactory;
 @SuiteClasses({ UsuarioDaoTeste.class, SensorDaoTeste.class })
 
 public class TestesDao {
+	
+	@BeforeClass
+	public static void setBDURL() {
+		ConnectionConfiguration.URL = ConnectionConfiguration.URL_TESTES;
+	}
 
 	@AfterClass
 	public static void tearDown() throws SQLException {

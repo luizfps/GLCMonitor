@@ -12,11 +12,13 @@ import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.ufla.glcmonitor.jdbc.modelo.Endereco;
 import com.ufla.glcmonitor.jdbc.modelo.Sexo;
 import com.ufla.glcmonitor.jdbc.modelo.Usuario;
+import com.ufla.glcmonitor.jdbc.persistance.ConnectionConfiguration;
 import com.ufla.glcmonitor.jdbc.persistance.ConnectionFactory;
 
 public class UsuarioDaoTeste {
@@ -25,6 +27,11 @@ public class UsuarioDaoTeste {
 	private Usuario usuario2;
 	private Usuario usuario3;
 	private UsuarioDao usuarioDao;
+	
+	@BeforeClass
+	public static void setBDURL() {
+		ConnectionConfiguration.URL = ConnectionConfiguration.URL_TESTES;
+	}
 
 	@Before
 	public void inicializa() throws SQLException {

@@ -1,6 +1,6 @@
-create database glcmonitortestes;
+create database glcmonitor;
 
-use glcmonitortestes;
+use glcmonitor;
 
 create table usuario (
   login VARCHAR(255) NOT NULL,
