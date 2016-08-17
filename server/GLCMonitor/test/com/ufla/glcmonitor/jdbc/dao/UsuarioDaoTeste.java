@@ -362,8 +362,7 @@ public class UsuarioDaoTeste {
 	public void alteraEnderecoNullTeste() throws SQLException {
 		usuarioDao.adiciona(usuario1);
 		usuarioDao.alteraEndereco(null, usuario1.getLogin());
-		assertEquals(UtilTestes.getEndereco(null, null, null, null, null, null, null),
-				usuarioDao.busca(usuario1.getLogin()).getEndereco());
+		assertEquals(null, usuarioDao.busca(usuario1.getLogin()).getEndereco());
 	}
 
 	@Test

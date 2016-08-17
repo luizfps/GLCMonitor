@@ -15,6 +15,7 @@ import com.ufla.glcmonitor.jdbc.modelo.Usuario;
 
 public class GsonTestes {
 
+	//Gson não guarda os milisegundos de um Date
 	private Gson gson;
 	private Usuario usuario1;
 	// private Usuario usuario2;
@@ -24,7 +25,7 @@ public class GsonTestes {
 	@Before
 	public void inicializa() throws SQLException {
 		usuario1 = UtilTestes
-				.getUsuario(23522342L, new Date(1000000000L), new Date(100L), "teste1@email.com",
+				.getUsuario(23522342L, new Date(100000000L), new Date(100L), "teste1@email.com",
 						UtilTestes.getEndereco("Centro", 37200000L, "Lavras", null, "MG", "Rua A",
 								100),
 						"teste1@email.com", "Teste1", null, "senha1", new ArrayList<>(),
