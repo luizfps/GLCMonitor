@@ -17,6 +17,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ufla.glcmonitor.conection.LocalDatabaseConection;
+import com.ufla.glcmonitor.dao.UsuarioDao;
 import com.ufla.glcmonitor.modelo.Usuario;
 
 public class HomeActivity extends AppCompatActivity
@@ -37,7 +39,7 @@ public class HomeActivity extends AppCompatActivity
                 && getIntent().getExtras().get("usuario") != null) {
             usuario = (Usuario) getIntent().getExtras().get("usuario");
         }
-        Toast.makeText(this, usuario.getNome()+";"+usuario.getLogin(),
+        Toast.makeText(this, usuario.getLogin() + "\n" + usuario.getSenha(),
                 Toast.LENGTH_SHORT).show();
 
 
@@ -108,6 +110,14 @@ public class HomeActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_configuracoes) {
             settingsClick();
+        } else if(id == R.id.nav_sair){
+
+            if (LocalDatabaseConection.userIsLogged(this)){
+                UsuarioDao usuarioDao = new UsuarioDao(this);
+                usuarioDao.deleteLocal(usuario);
+                LocalDatabaseConection.setLogget(this,false,"not");
+            }
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -20,6 +20,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -31,7 +32,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.ufla.glcmonitor.conection.LocalDatabaseConection;
 import com.ufla.glcmonitor.conection.RemoteDatabaseConection;
+import com.ufla.glcmonitor.dao.UsuarioDao;
 import com.ufla.glcmonitor.modelo.Usuario;
 
 import java.util.ArrayList;
@@ -67,6 +71,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private AppCompatCheckBox checkBoxSaveSata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +79,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         usuario = new Usuario();
         // Set up the login form.
+        checkBoxSaveSata = (AppCompatCheckBox)findViewById(R.id.saveData);
+
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
 
@@ -99,6 +106,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+
+        if(LocalDatabaseConection.userIsLogged(this)){
+            UsuarioDao usuarioDao = new UsuarioDao(this);
+            usuario = usuarioDao.buscaLocal(LocalDatabaseConection.getLocalLogin(this));
+            homeClick(getCurrentFocus());
+        }
     }
 
     private void populateAutoComplete() {
@@ -361,12 +375,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     public void homeClick(View v){
+        saveData();
         showProgress(true);
         mAuthTask = new UserLoginTask(usuario.getLogin(), usuario.getSenha());
         mAuthTask.execute((Void) null);
         Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtra("usuario", usuario);
         startActivity(intent);
+    }
+
+    public void saveData(){
+        if(checkBoxSaveSata.isChecked()){
+            UsuarioDao dao = new UsuarioDao(this);
+            dao.insertLocal(usuario);
+            LocalDatabaseConection.setLogget(this,true,usuario.getLogin());
+        }
     }
 
     private class Post extends AsyncTask<String, Void, Void> {

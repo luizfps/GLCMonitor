@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         usuario.setEmail(((EditText) findViewById(R.id.email_register)).getText().toString());
-
+        finish();
     }
 
     private class Post extends AsyncTask<String, Void, Void> {

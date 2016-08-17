@@ -23,6 +23,11 @@
             android:id="@+id/nav_configuracoes"
             android:icon="@drawable/ic_menu_manage"
             android:title="configurações" />
+
+        <item
+            android:id="@+id/nav_sair"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Sair" />
     </group>
 
 </menu>

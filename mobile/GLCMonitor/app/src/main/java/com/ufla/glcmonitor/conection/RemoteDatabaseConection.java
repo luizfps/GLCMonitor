@@ -18,6 +18,7 @@ public class RemoteDatabaseConection {
 
     private final static String REMOTE_LOGIN_CONNECTION = "http://192.168.56.1:8080/GLCMonitor/logar.jsp";
     private final static String REMOTE_REGISTER_USER_CONNECTION = "http://192.168.56.1:8080/GLCMonitor/cadastrarUsuario.jsp";
+    private final static String REMOTE_GET_USER_CONNECTION = "http://192.168.56.1:8080/GLCMonitor/getUsuario.jsp";
 
 
     private static URL url;
@@ -46,7 +47,12 @@ public class RemoteDatabaseConection {
         urlParameters = "usuario=" + gson.toJson(usuario, Usuario.class);
     }
 
-    private static void getRemoteOutputStream(){
+    private static void getLoginParameter(String login){
+        Gson gson = new Gson();
+        urlParameters = "login=" + login;
+    }
+
+    private static void setRemoteOutputStream(){
         try {
             dStream = new DataOutputStream(connection.getOutputStream());
             dStream.writeBytes(urlParameters);
@@ -70,7 +76,6 @@ public class RemoteDatabaseConection {
                 responseOutput.append(line);
             }
             br.close();
-
             return responseOutput.toString();
 
         }catch (MalformedURLException e) {
@@ -79,7 +84,7 @@ public class RemoteDatabaseConection {
             e.printStackTrace();
         }
 
-        return "Error getRemoteOutputStream";
+        return "Error";
 
     }
 
@@ -88,7 +93,7 @@ public class RemoteDatabaseConection {
 
         getRemoteConnection(REMOTE_LOGIN_CONNECTION);
         getRemoteUserParameters(usuario);
-        getRemoteOutputStream();
+        setRemoteOutputStream();
         return getRemoteMsgOutput();
 
     }
@@ -97,9 +102,16 @@ public class RemoteDatabaseConection {
 
         getRemoteConnection(REMOTE_REGISTER_USER_CONNECTION);
         getRemoteUserParameters(usuario);
-        getRemoteOutputStream();
+        setRemoteOutputStream();
         return getRemoteMsgOutput();
 
+    }
+
+    public static Usuario remoteGetUsusrio(String login){
+        getRemoteConnection(REMOTE_GET_USER_CONNECTION);
+        getLoginParameter(login);
+        setRemoteOutputStream();
+        return (new Gson().fromJson(getRemoteMsgOutput(),Usuario.class));
     }
 
 

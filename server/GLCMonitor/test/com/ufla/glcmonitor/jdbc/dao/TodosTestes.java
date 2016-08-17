@@ -8,8 +8,6 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @SuiteClasses({ TestesDao.class, GsonTestes.class })
 
-public class TodosTestes {
-	
-	
+public class TodosTestes {	
 
 }

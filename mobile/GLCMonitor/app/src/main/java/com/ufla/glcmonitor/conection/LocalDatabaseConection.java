@@ -11,15 +11,19 @@ import com.ufla.glcmonitor.activities.R;
 
 
 public class LocalDatabaseConection extends SQLiteOpenHelper {
-
-    public static final int USER_LOGGED = 1;
-    public static final int USER_NOT_LOGGED = 0;
-
-    private static final String NAME_DB = "DB_GLC_Monitor";
+    private static final String NAME_DB = "glcmonitor";
     private static final int VERSION_DB = 1;
 
-    private static final String CREATE_GRAPH_TABLE = "CREATE TABLE historical_graphics( )";
-    private static final String DROP_GRAPH_TABLE = "DROP TABLE historical_graphics";
+    private static final String CREATE_TABLE_USER =
+            "create table usuario (" +
+            "  login VARCHAR(255) NOT NULL," +
+            "  senha VARCHAR(30)," +
+            "  nome VARCHAR(255)," +
+            "  telefone BIGINT," +
+            "  email VARCHAR(255) UNIQUE," +
+            "  rg BIGINT UNIQUE," +
+            "  cpf BIGINT UNIQUE" +
+            ");" ;
 
 
     /*Construtor cria o banco */
@@ -30,37 +34,37 @@ public class LocalDatabaseConection extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(CREATE_GRAPH_TABLE);
+        db.execSQL(CREATE_TABLE_USER);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL(DROP_GRAPH_TABLE);
         onCreate(db);
     }
 
-    public static boolean userIsLogged(Activity activity){
+    public static boolean userIsLogged(Context context){
 
-        String preferenceKey = activity.getString(R.string.preference_user_login);
-        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = context.getSharedPreferences("preference",context.MODE_PRIVATE);
 
-        if(!sharedPref.contains(preferenceKey)){
-            setLogget(activity,USER_NOT_LOGGED);
+        if(!sharedPref.contains(context.getString(R.string.preference_user_logged))){
+            setLogget(context,false,"not");
             return false;
         }
 
-        if(sharedPref.getInt(preferenceKey,USER_NOT_LOGGED) == USER_NOT_LOGGED) {
-            return false;
-        }
-
-        return true;
+        return (sharedPref.getBoolean(context.getString(R.string.preference_user_logged),false));
 
     }
 
-    public static void setLogget(Activity activity,int value){
-        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+    public  static  String getLocalLogin(Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences("preference",context.MODE_PRIVATE);
+        return sharedPref.getString(context.getString(R.string.preference_user_login),"User");
+    }
+
+    public static void setLogget(Context context,boolean logged, String loggin){
+        SharedPreferences sharedPref = context.getSharedPreferences("preference",context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt(activity.getString(R.string.preference_user_login), value);
+        editor.putBoolean(context.getString(R.string.preference_user_logged), logged);
+        editor.putString(context.getString(R.string.preference_user_login), loggin);
         editor.commit();
     }
 }

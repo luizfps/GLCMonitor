@@ -81,7 +81,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="Save my data"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:id="@+id/saveData"/>
 
             <Button
                 android:id="@+id/email_register_button"
