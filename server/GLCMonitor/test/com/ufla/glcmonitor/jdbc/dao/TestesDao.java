@@ -13,7 +13,7 @@ import com.ufla.glcmonitor.jdbc.persistance.ConnectionFactory;
 
 @RunWith(Suite.class)
 
-@SuiteClasses({ UsuarioDaoTeste.class })
+@SuiteClasses({ UsuarioDaoTeste.class, SensorDaoTeste.class })
 
 public class TestesDao {
 

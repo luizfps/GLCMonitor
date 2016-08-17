@@ -70,8 +70,8 @@ public class UsuarioDao {
 				Usuario usuario = new Usuario();
 				usuario.setCpf(Util.getResultSetValueLong(rs, "cpf"));
 				usuario.setDataDeCadastramento(
-						Util.sqlDateToUtilDate(rs.getDate("dataDeCadastramento")));
-				usuario.setDataDeNascimento(Util.sqlDateToUtilDate(rs.getDate("dataDeNascimento")));
+						Util.sqlDateToUtilDate(rs.getTimestamp("dataDeCadastramento")));
+				usuario.setDataDeNascimento(Util.sqlDateToUtilDate(rs.getTimestamp("dataDeNascimento")));
 				usuario.setEmail(rs.getString("email"));
 				usuario.setEndereco(new EnderecoDao().busca(rs.getString("login")));
 				usuario.setLogin(rs.getString("login"));
@@ -117,8 +117,8 @@ public class UsuarioDao {
 				usuario = new Usuario();
 				usuario.setCpf(Util.getResultSetValueLong(rs, "cpf"));
 				usuario.setDataDeCadastramento(
-						Util.sqlDateToUtilDate(rs.getDate("dataDeCadastramento")));
-				usuario.setDataDeNascimento(Util.sqlDateToUtilDate(rs.getDate("dataDeNascimento")));
+						Util.sqlDateToUtilDate(rs.getTimestamp("dataDeCadastramento")));
+				usuario.setDataDeNascimento(Util.sqlDateToUtilDate(rs.getTimestamp("dataDeNascimento")));
 				usuario.setEmail(rs.getString("email"));
 				usuario.setEndereco(new EnderecoDao().busca(rs.getString("login")));
 				usuario.setLogin(rs.getString("login"));
@@ -219,8 +219,8 @@ public class UsuarioDao {
 					usuario.setSexo(rs.getString("sexo").charAt(0));
 				}
 				usuario.setDataDeCadastramento(
-						Util.sqlDateToUtilDate(rs.getDate("dataDeCadastramento")));
-				usuario.setDataDeNascimento(Util.sqlDateToUtilDate(rs.getDate("dataDeNascimento")));
+						Util.sqlDateToUtilDate(rs.getTimestamp("dataDeCadastramento")));
+				usuario.setDataDeNascimento(Util.sqlDateToUtilDate(rs.getTimestamp("dataDeNascimento")));
 				usuario.setEndereco(new EnderecoDao().busca(usuario.getLogin()));
 				usuario.setSensores(new SensorDao().buscaPorUsuario(usuario));
 				usuarios.add(usuario);

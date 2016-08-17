@@ -15,7 +15,7 @@ public class ConnectionFactory {
 			e.printStackTrace();
 		}
 		try {
-			return DriverManager.getConnection(URL, "root", "chp123");
+			return DriverManager.getConnection(URL, "root", "aluno");
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}

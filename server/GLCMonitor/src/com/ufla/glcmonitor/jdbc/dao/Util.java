@@ -46,9 +46,9 @@ public class Util {
 	public static void setDatePreparedStatement(PreparedStatement stmt, int parameterIndex,
 			java.util.Date data) throws SQLException {
 		if (data == null) {
-			stmt.setDate(parameterIndex, null);
+			stmt.setTimestamp(parameterIndex, null);
 		} else {
-			stmt.setDate(parameterIndex, new java.sql.Date(data.getTime()));
+			stmt.setTimestamp(parameterIndex, new java.sql.Timestamp(data.getTime()));
 		}
 	}
 
@@ -92,7 +92,7 @@ public class Util {
 		return value;
 	}
 
-	public static java.util.Date sqlDateToUtilDate(java.sql.Date data) {
+	public static java.util.Date sqlDateToUtilDate(java.sql.Timestamp data) {
 		if (data == null) {
 			return null;
 		}

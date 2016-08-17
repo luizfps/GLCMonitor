@@ -25,24 +25,21 @@ public class GsonTestes {
 	@Before
 	public void inicializa() throws SQLException {
 		usuario1 = UtilTestes
-				.getUsuario(23522342L, new Date(100000000L), new Date(100L), "teste1@email.com",
+				.getUsuario(23522342L, new Date(1000000000L), new Date(1000L), "teste1@email.com",
 						UtilTestes.getEndereco("Centro", 37200000L, "Lavras", null, "MG", "Rua A",
 								100),
 						"teste1@email.com", "Teste1", null, "senha1", new ArrayList<>(),
 						Sexo.getSexo('M'), 12423525L);
-		// usuario2 = UtilTestes.getUsuario(23423252344L, new
-		// Date(100353234000L), new Date(13242L),
-		// "teste2@email.com", UtilTestes.getEndereco("Centro", 37200000L,
-		// "Lavras", null, "MG", "Rua B", 241),
-		// "teste2@email.com", "Teste2", 92378462L, "senha2", new ArrayList<>(),
-		// Sexo.getSexo('F'), 13112131L);
-		// usuario3 = UtilTestes.getUsuario(null, new Date(1000000000L), new
-		// Date(100L),
-		// "teste3@email.com", UtilTestes.getEndereco("Centro", 37200000L,
-		// "Lavras", "Ap 301", "MG", "Rua C", 123),
-		// "teste3@email.com", "Teste3", 62728327L, "senha3", null,
-		// Sexo.getSexo('M'), null);
-		// usuarioDao = new UsuarioDao();
+		/*usuario2 = UtilTestes.getUsuario(23423252344L, new Date(100353234000L), new Date(13242000L),
+				"teste2@email.com",
+				UtilTestes.getEndereco("Centro", 37200000L, "Lavras", null, "MG", "Rua B", 241),
+				"teste2@email.com", "Teste2", 92378462L, "senha2", new ArrayList<>(),
+				Sexo.getSexo('F'), 13112131L);
+		usuario3 = UtilTestes.getUsuario(null, new Date(1000000000L), new Date(1000L),
+				"teste3@email.com",
+				UtilTestes.getEndereco("Centro", 37200000L, "Lavras", "Ap 301", "MG", "Rua C", 123),
+				"teste3@email.com", "Teste3", 62728327L, "senha3", null, Sexo.getSexo('M'), null);
+		usuarioDao = new UsuarioDao();*/
 		gson = new Gson();
 	}
 
