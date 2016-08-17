@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionFactory {
-	
-	public static String URL =  "jdbc:mysql://localhost:3306/glcmonitortestes";
-	
+
+	public static String URL = "jdbc:mysql://localhost:3306/glcmonitortestes";
+
 	public Connection getConnection() {
 		try {
 		    Class.forName("com.mysql.jdbc.Driver");

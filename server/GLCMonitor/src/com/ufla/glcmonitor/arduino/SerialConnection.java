@@ -21,8 +21,9 @@ public class SerialConnection implements SerialPortEventListener {
 	SerialPort serialPort;
 
 	/** The port we're normally going to use. */
-	private static final String PORT_NAMES[] = { 
-			"/dev/tty.usbserial-A9007UX1", // Mac OS X
+	private static final String PORT_NAMES[] = { "/dev/tty.usbserial-A9007UX1", // Mac
+																				// OS
+																				// X
 			PORT_NAME, // Raspberry Pi
 			"/dev/ttyUSB0", // Linux
 			"COM3", // Windows
@@ -111,7 +112,7 @@ public class SerialConnection implements SerialPortEventListener {
 				registroDeTemperatura.setMomento(new Date());
 				registroDeTemperatura.setTemperatura(temperatura);
 				new RegistroDeTemperaturaDao().adiciona(registroDeTemperatura, sensorCodigo);
-				//System.out.println(sensorCodigo + ";" + temperatura);
+				// System.out.println(sensorCodigo + ";" + temperatura);
 			} catch (Exception e) {
 				System.err.println(e.toString());
 			}

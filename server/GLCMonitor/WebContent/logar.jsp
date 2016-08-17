@@ -2,7 +2,6 @@
 <%@page import="com.ufla.glcmonitor.jdbc.dao.UsuarioDao"%>
 <%@page import="com.google.gson.Gson"%>
 <%
-	
 	String usuarioJson = request.getParameter("usuario");
  	Gson gson = new Gson();
 	Usuario usuario = gson.fromJson(usuarioJson, Usuario.class);

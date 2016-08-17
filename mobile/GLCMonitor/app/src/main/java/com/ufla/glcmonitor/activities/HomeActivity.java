@@ -50,13 +50,12 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        relativeLayout = (RelativeLayout) findViewById(R.id.content_home);
+        //relativeLayout = (RelativeLayout) findViewById(R.id.content_home);
 
-        LinearLayout navHeaderApp = (LinearLayout) getResources().getLayout(R.layout.nav_header_app);
-        ((TextView) navHeaderApp.findViewById(R.id.navName)).setText("");
-        ((TextView) navHeaderApp.findViewById(R.id.navLogin)).setText("");
-        int layoutID = getResources().getIdentifier("layout"+n, "id", getPackageName());
-        return (LinearLayout) LayoutInflater.from(this).inflate(layoutID, null);
+        //LinearLayout navHeaderApp = (LinearLayout) getResources().getLayout(R.layout.nav_header_app);
+        //((TextView) navHeaderApp.findViewById(R.id.navName)).setText("");
+        //((TextView) navHeaderApp.findViewById(R.id.navLogin)).setText("");
+
     }
 
     @Override

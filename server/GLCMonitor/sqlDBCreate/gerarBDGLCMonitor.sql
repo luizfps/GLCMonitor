@@ -1,6 +1,6 @@
-create database glcmonitor;
+create database glcmonitortestes;
 
-use glcmonitor;
+use glcmonitortestes;
 
 create table usuario (
   login VARCHAR(255) NOT NULL,
@@ -11,8 +11,8 @@ create table usuario (
   rg BIGINT UNIQUE,
   cpf BIGINT UNIQUE,
   sexo ENUM('M', 'F'),
-  dataDeCadastramento DATE,
-  dataDeNascimento DATE,
+  dataDeCadastramento DATETIME,
+  dataDeNascimento DATETIME,
   PRIMARY KEY (login)
 );
 
