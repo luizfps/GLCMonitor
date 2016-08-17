@@ -17,7 +17,7 @@ public class ConnectionFactory {
 		} 
         try {
             return DriverManager.getConnection(
-          URL, "root", "chp123");
+          URL, "root", "32252132");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
