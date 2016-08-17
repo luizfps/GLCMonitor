@@ -1,25 +1,31 @@
 package com.ufla.glcmonitor.jdbc.modelo;
 
 public class LimitesDeTemperatura {
-	
-    private Float temperaturaMinima;
-    private Float temperaturaMaxima;
-    
-    public Float getTemperaturaMinima() {
-        return temperaturaMinima;
-    }
 
-    public void setTemperaturaMinima(Float temperaturaMinima) {
-        this.temperaturaMinima = temperaturaMinima;
-    }
+	private Float temperaturaMinima;
+	private Float temperaturaMaxima;
 
-    public Float getTemperaturaMaxima() {
-        return temperaturaMaxima;
-    }
+	public Float getTemperaturaMinima() {
+		return temperaturaMinima;
+	}
 
-    public void setTemperaturaMaxima(Float temperaturaMaxima) {
-        this.temperaturaMaxima = temperaturaMaxima;
-    }
+	public void setTemperaturaMinima(Float temperaturaMinima) {
+		this.temperaturaMinima = temperaturaMinima;
+	}
+
+	public Float getTemperaturaMaxima() {
+		return temperaturaMaxima;
+	}
+
+	public void setTemperaturaMaxima(Float temperaturaMaxima) {
+		this.temperaturaMaxima = temperaturaMaxima;
+	}
+
+	@Override
+	public String toString() {
+		return "LimitesDeTemperatura [temperaturaMinima=" + temperaturaMinima
+				+ ", temperaturaMaxima=" + temperaturaMaxima + "]";
+	}
 
 	@Override
 	public int hashCode() {
@@ -32,37 +38,24 @@ public class LimitesDeTemperatura {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (!(obj instanceof LimitesDeTemperatura)) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
 		LimitesDeTemperatura other = (LimitesDeTemperatura) obj;
 		if (temperaturaMaxima == null) {
-			if (other.temperaturaMaxima != null) {
+			if (other.temperaturaMaxima != null)
 				return false;
-			}
-		} else if (!temperaturaMaxima.equals(other.temperaturaMaxima)) {
+		} else if (!temperaturaMaxima.equals(other.temperaturaMaxima))
 			return false;
-		}
 		if (temperaturaMinima == null) {
-			if (other.temperaturaMinima != null) {
+			if (other.temperaturaMinima != null)
 				return false;
-			}
-		} else if (!temperaturaMinima.equals(other.temperaturaMinima)) {
+		} else if (!temperaturaMinima.equals(other.temperaturaMinima))
 			return false;
-		}
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "LimitesDeTemperatura [temperaturaMinima=" + temperaturaMinima 
-				+ ", temperaturaMaxima=" + temperaturaMaxima + "]";
-	}
-    
 }

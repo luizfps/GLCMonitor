@@ -4,24 +4,29 @@ import java.util.Date;
 
 public class RegistroDeTemperatura {
 
-    private Float temperatura;
-    private Date momento;
-    
+	private Float temperatura;
+	private Date momento;
+
 	public Float getTemperatura() {
-        return temperatura;
-    }
+		return temperatura;
+	}
 
-    public void setTemperatura(Float temperatura) {
-        this.temperatura = temperatura;
-    }
+	public void setTemperatura(Float temperatura) {
+		this.temperatura = temperatura;
+	}
 
-    public Date getMomento() {
-        return momento;
-    }
+	public Date getMomento() {
+		return momento;
+	}
 
-    public void setMomento(Date momento) {
-        this.momento = momento;
-    }
+	public void setMomento(Date momento) {
+		this.momento = momento;
+	}
+
+	@Override
+	public String toString() {
+		return "RegistroDeTemperatura [temperatura=" + temperatura + ", momento=" + momento + "]";
+	}
 
 	@Override
 	public int hashCode() {
@@ -34,37 +39,24 @@ public class RegistroDeTemperatura {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (!(obj instanceof RegistroDeTemperatura)) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
 		RegistroDeTemperatura other = (RegistroDeTemperatura) obj;
 		if (momento == null) {
-			if (other.momento != null) {
+			if (other.momento != null)
 				return false;
-			}
-		} else if (!momento.equals(other.momento)) {
+		} else if (!momento.equals(other.momento))
 			return false;
-		}
 		if (temperatura == null) {
-			if (other.temperatura != null) {
+			if (other.temperatura != null)
 				return false;
-			}
-		} else if (!temperatura.equals(other.temperatura)) {
+		} else if (!temperatura.equals(other.temperatura))
 			return false;
-		}
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "RegistroDeTemperatura [temperatura=" + temperatura 
-				+ ", momento=" + momento + "]";
-	}
-        
 }

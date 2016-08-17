@@ -17,26 +17,21 @@ import com.ufla.glcmonitor.jdbc.persistance.ConnectionFactory;
 
 public class TestesDao {
 
+	@AfterClass
+	public static void tearDown() throws SQLException {
+		Connection connection = new ConnectionFactory().getConnection();
+		PreparedStatement stmt = connection.prepareStatement("delete from usuarioSensor");
+		stmt.execute();
+		stmt = connection.prepareStatement("delete from usuario");
+		stmt.execute();
+		stmt = connection.prepareStatement("delete from endereco");
+		stmt.execute();
+		stmt = connection.prepareStatement("delete from sensor");
+		stmt.execute();
+		stmt = connection.prepareStatement("delete from registroDeTemperatura");
+		stmt.execute();
+		stmt.close();
+		connection.close();
+	}
 
-    @AfterClass
-    public static void tearDown() throws SQLException {
-    	Connection connection = new ConnectionFactory().getConnection();
-    	PreparedStatement stmt = connection.
-    			prepareStatement("delete from usuarioSensor");
-    	stmt.execute();
-    	stmt = connection.
-    			prepareStatement("delete from usuario");
-    	stmt.execute();
-    	stmt = connection.
-    			prepareStatement("delete from endereco");
-    	stmt.execute();
-    	stmt = connection.
-    			prepareStatement("delete from sensor");
-    	stmt.execute();
-    	stmt = connection.
-    			prepareStatement("delete from registroDeTemperatura");
-    	stmt.execute();
-    	stmt.close();
-    }
-    
 }

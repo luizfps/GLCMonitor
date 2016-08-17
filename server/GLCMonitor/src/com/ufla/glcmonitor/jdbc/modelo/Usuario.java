@@ -7,123 +7,123 @@ import java.util.List;
 
 public class Usuario implements Comparable<Usuario> {
 
-    private String nome;
-    private Long telefone;
-    private String email;
-    private Date dataDeCadastramento;
-    private Long rg;
-    private Long cpf;
-    private Sexo sexo;
-    private Date dataDeNascimento;
-    private String login;
-    private String senha;
-    private Endereco endereco;
-    private List<Sensor> sensores;
-    
-    public Usuario() {
-    	sensores = new ArrayList<>();
-    }
+	private String nome;
+	private Long telefone;
+	private String email;
+	private Date dataDeCadastramento;
+	private Long rg;
+	private Long cpf;
+	private Sexo sexo;
+	private Date dataDeNascimento;
+	private String login;
+	private String senha;
+	private Endereco endereco;
+	private List<Sensor> sensores;
 
-    public String getNome() {
-        return nome;
-    }
+	public Usuario() {
+		sensores = new ArrayList<>();
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public Long getTelefone() {
-        return telefone;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public void setTelefone(Long telefone) {
-        this.telefone = telefone;
-    }
+	public Long getTelefone() {
+		return telefone;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setTelefone(Long telefone) {
+		this.telefone = telefone;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public Date getDataDeCadastramento() {
-        return dataDeCadastramento;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setDataDeCadastramento(Date dataDeCadastramento) {
-        this.dataDeCadastramento = dataDeCadastramento;
-    }
+	public Date getDataDeCadastramento() {
+		return dataDeCadastramento;
+	}
 
-    public Long getRg() {
-        return rg;
-    }
+	public void setDataDeCadastramento(Date dataDeCadastramento) {
+		this.dataDeCadastramento = dataDeCadastramento;
+	}
 
-    public void setRg(Long rg) {
-        this.rg = rg;
-    }
+	public Long getRg() {
+		return rg;
+	}
 
-    public Long getCpf() {
-        return cpf;
-    }
+	public void setRg(Long rg) {
+		this.rg = rg;
+	}
 
-    public void setCpf(Long cpf) {
-        this.cpf = cpf;
-    }
+	public Long getCpf() {
+		return cpf;
+	}
 
-    public Sexo getSexo() {
-        return sexo;
-    }
-    
-    public String getSexoValueStr() {
-    	if(sexo == null) {
-    		return null;
-    	}
-        return String.valueOf(sexo.getValue());
-    }
+	public void setCpf(Long cpf) {
+		this.cpf = cpf;
+	}
 
-    public void setSexo(Sexo sexo) {
-        this.sexo = sexo;
-    }
-    
-    public void setSexo(Character sexoValue) {
-        this.sexo = Sexo.getSexo(sexoValue);
-    }
+	public Sexo getSexo() {
+		return sexo;
+	}
 
-    public Date getDataDeNascimento() {
-        return dataDeNascimento;
-    }
+	public String getSexoValueStr() {
+		if (sexo == null) {
+			return null;
+		}
+		return String.valueOf(sexo.getValue());
+	}
 
-    public void setDataDeNascimento(Date dataDeNascimento) {
-        this.dataDeNascimento = dataDeNascimento;
-    }
+	public void setSexo(Sexo sexo) {
+		this.sexo = sexo;
+	}
 
-    public String getLogin() {
-        return login;
-    }
+	public void setSexo(Character sexoValue) {
+		this.sexo = Sexo.getSexo(sexoValue);
+	}
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
+	public Date getDataDeNascimento() {
+		return dataDeNascimento;
+	}
 
-    public String getSenha() {
-        return senha;
-    }
+	public void setDataDeNascimento(Date dataDeNascimento) {
+		this.dataDeNascimento = dataDeNascimento;
+	}
 
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
+	public String getLogin() {
+		return login;
+	}
 
-    public List<Sensor> getSensores() {
-        return sensores;
-    }
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
-    public void setSensores(List<Sensor> sensores) {
-    	if(sensores != null) {
-    		this.sensores = sensores;
-    	}
-    }
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+
+	public List<Sensor> getSensores() {
+		return sensores;
+	}
+
+	public void setSensores(List<Sensor> sensores) {
+		if (sensores != null) {
+			this.sensores = sensores;
+		}
+	}
 
 	public Endereco getEndereco() {
 		return endereco;
@@ -132,26 +132,25 @@ public class Usuario implements Comparable<Usuario> {
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
-	
-    public Sensor getSensor(Long codigo) {
-    	Sensor sensor = new Sensor();
-    	sensor.setCodigo(codigo);
-    	Collections.sort(sensores);
-    	int indice = Collections.binarySearch(sensores, sensor);
-    	if(indice == -1) {
-    		return null;
-    	} else {
-    		return sensores.get(indice);
-    	}
-    }
-    
-    @Override
+
+	public Sensor getSensor(Long codigo) {
+		Sensor sensor = new Sensor();
+		sensor.setCodigo(codigo);
+		Collections.sort(sensores);
+		int indice = Collections.binarySearch(sensores, sensor);
+		if (indice == -1) {
+			return null;
+		} else {
+			return sensores.get(indice);
+		}
+	}
+
+	@Override
 	public String toString() {
-		return "Usuario [nome=" + nome + ", telefone=" + telefone + ", email=" 
-				+ email + ", dataDeCadastramento=" + dataDeCadastramento + ", rg=" 
-				+ rg + ", cpf=" + cpf + ", sexo=" + sexo + ", dataDeNascimento="
-				+ dataDeNascimento + ", login=" + login + ", senha=" + senha 
-				+ ", endereco=" + endereco + ", sensores=" + sensores + "]";
+		return "Usuario [nome=" + nome + ", telefone=" + telefone + ", email=" + email
+				+ ", dataDeCadastramento=" + dataDeCadastramento + ", rg=" + rg + ", cpf=" + cpf
+				+ ", sexo=" + sexo + ", dataDeNascimento=" + dataDeNascimento + ", login=" + login
+				+ ", senha=" + senha + ", endereco=" + endereco + ", sensores=" + sensores + "]";
 	}
 
 	@Override
@@ -159,7 +158,8 @@ public class Usuario implements Comparable<Usuario> {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((cpf == null) ? 0 : cpf.hashCode());
-		result = prime * result + ((dataDeCadastramento == null) ? 0 : dataDeCadastramento.hashCode());
+		result = prime * result
+				+ ((dataDeCadastramento == null) ? 0 : dataDeCadastramento.hashCode());
 		result = prime * result + ((dataDeNascimento == null) ? 0 : dataDeNascimento.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((endereco == null) ? 0 : endereco.hashCode());
@@ -246,5 +246,5 @@ public class Usuario implements Comparable<Usuario> {
 	public int compareTo(Usuario outroUsuario) {
 		return this.login.compareTo(outroUsuario.login);
 	}
-	
+
 }

@@ -2,69 +2,76 @@ package com.ufla.glcmonitor.jdbc.modelo;
 
 public class Endereco {
 
-    private String logradouro;
-    private Integer numero;
-    private String complemento;
-    private String bairro;
-    private String cidade;
-    private String estado;
-    private Long cep;
+	private String logradouro;
+	private Integer numero;
+	private String complemento;
+	private String bairro;
+	private String cidade;
+	private String estado;
+	private Long cep;
 
-    public String getLogradouro() {
-        return logradouro;
-    }
+	public String getLogradouro() {
+		return logradouro;
+	}
 
-    public void setLogradouro(String logradouro) {
-        this.logradouro = logradouro;
-    }
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
 
-    public Integer getNumero() {
-        return numero;
-    }
+	public Integer getNumero() {
+		return numero;
+	}
 
-    public void setNumero(Integer numero) {
-        this.numero = numero;
-    }
+	public void setNumero(Integer numero) {
+		this.numero = numero;
+	}
 
-    public String getComplemento() {
-        return complemento;
-    }
+	public String getComplemento() {
+		return complemento;
+	}
 
-    public void setComplemento(String complemento) {
-        this.complemento = complemento;
-    }
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
 
-    public String getBairro() {
-        return bairro;
-    }
+	public String getBairro() {
+		return bairro;
+	}
 
-    public void setBairro(String bairro) {
-        this.bairro = bairro;
-    }
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
 
-    public String getCidade() {
-        return cidade;
-    }
+	public String getCidade() {
+		return cidade;
+	}
 
-    public void setCidade(String cidade) {
-        this.cidade = cidade;
-    }
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
+	}
 
-    public String getEstado() {
-        return estado;
-    }
+	public String getEstado() {
+		return estado;
+	}
 
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
 
-    public Long getCep() {
-        return cep;
-    }
+	public Long getCep() {
+		return cep;
+	}
 
-    public void setCep(Long cep) {
-        this.cep = cep;
-    }
+	public void setCep(Long cep) {
+		this.cep = cep;
+	}
+
+	@Override
+	public String toString() {
+		return "Endereco [logradouro=" + logradouro + ", numero=" + numero + ", " + "complemento="
+				+ complemento + ", bairro=" + bairro + ", cidade=" + cidade + ", estado=" + estado
+				+ ", cep=" + cep + "]";
+	}
 
 	@Override
 	public int hashCode() {
@@ -82,74 +89,49 @@ public class Endereco {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
+		if (this == obj)
 			return true;
-		}
-		if (obj == null) {
+		if (obj == null)
 			return false;
-		}
-		if (!(obj instanceof Endereco)) {
+		if (getClass() != obj.getClass())
 			return false;
-		}
 		Endereco other = (Endereco) obj;
 		if (bairro == null) {
-			if (other.bairro != null) {
+			if (other.bairro != null)
 				return false;
-			}
-		} else if (!bairro.equals(other.bairro)) {
+		} else if (!bairro.equals(other.bairro))
 			return false;
-		}
 		if (cep == null) {
-			if (other.cep != null) {
+			if (other.cep != null)
 				return false;
-			}
-		} else if (!cep.equals(other.cep)) {
+		} else if (!cep.equals(other.cep))
 			return false;
-		}
 		if (cidade == null) {
-			if (other.cidade != null) {
+			if (other.cidade != null)
 				return false;
-			}
-		} else if (!cidade.equals(other.cidade)) {
+		} else if (!cidade.equals(other.cidade))
 			return false;
-		}
 		if (complemento == null) {
-			if (other.complemento != null) {
+			if (other.complemento != null)
 				return false;
-			}
-		} else if (!complemento.equals(other.complemento)) {
+		} else if (!complemento.equals(other.complemento))
 			return false;
-		}
 		if (estado == null) {
-			if (other.estado != null) {
+			if (other.estado != null)
 				return false;
-			}
-		} else if (!estado.equals(other.estado)) {
+		} else if (!estado.equals(other.estado))
 			return false;
-		}
 		if (logradouro == null) {
-			if (other.logradouro != null) {
+			if (other.logradouro != null)
 				return false;
-			}
-		} else if (!logradouro.equals(other.logradouro)) {
+		} else if (!logradouro.equals(other.logradouro))
 			return false;
-		}
 		if (numero == null) {
-			if (other.numero != null) {
+			if (other.numero != null)
 				return false;
-			}
-		} else if (!numero.equals(other.numero)) {
+		} else if (!numero.equals(other.numero))
 			return false;
-		}
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "Endereco [logradouro=" + logradouro + ", numero=" + numero + ", "
-				+ "complemento=" + complemento + ", bairro=" + bairro + ", cidade=" 
-				+ cidade + ", estado=" + estado + ", cep=" + cep + "]";
-	}
-    
-    
 }

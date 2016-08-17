@@ -12,10 +12,9 @@ import com.ufla.glcmonitor.jdbc.modelo.Usuario;
 import com.ufla.glcmonitor.jdbc.modelo.UsuarioSensor;
 
 public class UtilTestes {
-	
-	public static Endereco getEndereco(String bairro, Long cep, String cidade, 
-			String complemento, String estado, String logradouro, 
-			Integer numero) {
+
+	public static Endereco getEndereco(String bairro, Long cep, String cidade, String complemento,
+			String estado, String logradouro, Integer numero) {
 		Endereco endereco = new Endereco();
 		endereco.setBairro(bairro);
 		endereco.setCep(cep);
@@ -27,9 +26,8 @@ public class UtilTestes {
 		return endereco;
 	}
 
-	public static Usuario getUsuario(Long cpf, Date dataDeCadastramento, 
-			Date dataDeNascimento, String email, Endereco endereco, 
-			String login, String nome, Long rg, String senha, 
+	public static Usuario getUsuario(Long cpf, Date dataDeCadastramento, Date dataDeNascimento,
+			String email, Endereco endereco, String login, String nome, Long rg, String senha,
 			List<Sensor> sensores, Sexo sexo, Long telefone) {
 		Usuario usuario = new Usuario();
 		usuario.setCpf(cpf);
@@ -46,10 +44,9 @@ public class UtilTestes {
 		usuario.setTelefone(telefone);
 		return usuario;
 	}
-	
-	public static Sensor getSensor(Long codigo, String modelo, 
-			LimitesDeTemperatura faixaDeOperacao, Float erro,  Usuario usuario, 
-			List<RegistroDeTemperatura> registrosDeTemperatura) {
+
+	public static Sensor getSensor(Long codigo, String modelo, LimitesDeTemperatura faixaDeOperacao,
+			Float erro, Usuario usuario, List<RegistroDeTemperatura> registrosDeTemperatura) {
 		Sensor sensor = new Sensor();
 		sensor.setCodigo(codigo);
 		sensor.setModelo(modelo);
@@ -59,26 +56,24 @@ public class UtilTestes {
 		sensor.setRegistrosDeTemperatura(registrosDeTemperatura);
 		return sensor;
 	}
-	
-	public static LimitesDeTemperatura getLimitesDeTemperatura(Float temperaturaMinima, 
+
+	public static LimitesDeTemperatura getLimitesDeTemperatura(Float temperaturaMinima,
 			Float temperaturaMaxima) {
 		LimitesDeTemperatura limitesDeTemperatura = new LimitesDeTemperatura();
 		limitesDeTemperatura.setTemperaturaMinima(temperaturaMinima);
 		limitesDeTemperatura.setTemperaturaMaxima(temperaturaMaxima);
 		return limitesDeTemperatura;
 	}
-	
-	public static RegistroDeTemperatura getRegistroDeTemperatura(Float temperatura, 
-			Date momento) {
+
+	public static RegistroDeTemperatura getRegistroDeTemperatura(Float temperatura, Date momento) {
 		RegistroDeTemperatura registroDeTemperatura = new RegistroDeTemperatura();
 		registroDeTemperatura.setTemperatura(temperatura);
 		registroDeTemperatura.setMomento(momento);
 		return registroDeTemperatura;
 	}
-	
-	public static UsuarioSensor getUsuarioSensor(LimitesDeTemperatura 
-			limitesDeTemperatura, Integer intervaloDeAtualizacaoDeDados, 
-			Usuario usuario, Sensor sensor) {
+
+	public static UsuarioSensor getUsuarioSensor(LimitesDeTemperatura limitesDeTemperatura,
+			Integer intervaloDeAtualizacaoDeDados, Usuario usuario, Sensor sensor) {
 		UsuarioSensor usuarioSensor = new UsuarioSensor();
 		usuarioSensor.setLimitesDeTemperatura(limitesDeTemperatura);
 		usuarioSensor.setIntervaloDeAtualizacaoDeDados(intervaloDeAtualizacaoDeDados);
