@@ -19,7 +19,7 @@ public class RemoteDatabaseConection {
             ":" + ConnectionConfiguration.PORTA + "/GLCMonitor/cadastrarUsuario.jsp";
     private final static String REMOTE_LOGIN_CONNECTION = "http://"+ConnectionConfiguration.IP+
             ":" + ConnectionConfiguration.PORTA + "/GLCMonitor/logar.jsp";
-    
+
     private static URL url;
     private static HttpURLConnection connection;
     private static DataOutputStream dStream;
