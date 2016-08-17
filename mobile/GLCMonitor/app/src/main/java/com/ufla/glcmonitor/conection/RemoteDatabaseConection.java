@@ -1,8 +1,5 @@
 package com.ufla.glcmonitor.conection;
 
-import android.content.Context;
-import android.widget.Toast;
-
 import com.google.gson.Gson;
 import com.ufla.glcmonitor.modelo.Usuario;
 
@@ -16,11 +13,13 @@ import java.net.URL;
 
 public class RemoteDatabaseConection {
 
-    private final static String REMOTE_LOGIN_CONNECTION = "http://192.168.56.1:8080/GLCMonitor/logar.jsp";
-    private final static String REMOTE_REGISTER_USER_CONNECTION = "http://192.168.56.1:8080/GLCMonitor/cadastrarUsuario.jsp";
-    private final static String REMOTE_GET_USER_CONNECTION = "http://192.168.56.1:8080/GLCMonitor/getUsuario.jsp";
-
-
+    private final static String REMOTE_GET_USER_CONNECTION = "http://"+ConnectionConfiguration.IP+
+            ":" + ConnectionConfiguration.PORTA + "/GLCMonitor/getUsuario.jsp";
+    private final static String REMOTE_REGISTER_USER_CONNECTION = "http://"+ConnectionConfiguration.IP+
+            ":" + ConnectionConfiguration.PORTA + "/GLCMonitor/cadastrarUsuario.jsp";
+    private final static String REMOTE_LOGIN_CONNECTION = "http://"+ConnectionConfiguration.IP+
+            ":" + ConnectionConfiguration.PORTA + "/GLCMonitor/logar.jsp";
+    
     private static URL url;
     private static HttpURLConnection connection;
     private static DataOutputStream dStream;
