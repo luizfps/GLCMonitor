@@ -39,7 +39,7 @@ public class HomeActivity extends AppCompatActivity
                 && getIntent().getExtras().get("usuario") != null) {
             usuario = (Usuario) getIntent().getExtras().get("usuario");
         }
-        Toast.makeText(this, usuario.getLogin() + "\n" + usuario.getSenha(),
+        Toast.makeText(this, usuario.getNome() + "\n" +usuario.getLogin() + "\n",
                 Toast.LENGTH_SHORT).show();
 
 

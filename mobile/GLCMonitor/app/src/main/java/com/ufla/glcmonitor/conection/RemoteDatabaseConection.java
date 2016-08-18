@@ -79,8 +79,10 @@ public class RemoteDatabaseConection {
 
         }catch (MalformedURLException e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
 
         return "Error";
@@ -106,7 +108,7 @@ public class RemoteDatabaseConection {
 
     }
 
-    public static Usuario remoteGetUsusrio(String login){
+    public static Usuario remoteGetUsuario(String login){
         getRemoteConnection(REMOTE_GET_USER_CONNECTION);
         getLoginParameter(login);
         setRemoteOutputStream();

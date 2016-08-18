@@ -8,8 +8,9 @@
 	Usuario usuarioEsperado = new UsuarioDao().busca(usuario.getLogin());
 	if(usuario != null && usuario.getSenha() != null && usuarioEsperado != null &&
 			usuario.getSenha().equals(usuarioEsperado.getSenha())) {
-		out.println("Sucesso!");
+		out.print("Sucesso!");
 	} else {
-		out.println("Login ou senha incorreto!");
+		out.print("Login ou senha incorreto!");
 	}
+	//out.print("λ"+gson.toJson(usuarioEsperado,Usuario.class));
 %>

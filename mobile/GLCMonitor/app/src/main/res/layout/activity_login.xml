@@ -96,7 +96,6 @@
                 android:onClick="registerClick"
                 android:layout_gravity="bottom|center_horizontal" />
 
-
         </LinearLayout>
 
 

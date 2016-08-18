@@ -33,6 +33,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.ufla.glcmonitor.conection.LocalDatabaseConection;
 import com.ufla.glcmonitor.conection.RemoteDatabaseConection;
 import com.ufla.glcmonitor.dao.UsuarioDao;
@@ -207,7 +208,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // perform the user login attempt.
             usuario.setLogin(mEmailView.getText().toString());
             usuario.setSenha(mPasswordView.getText().toString());
+            System.out.println(Thread.currentThread().getName());
             new Post(this).execute();
+            //RemoteDatabaseConection.remoteLoginDatabase(usuario);
+//            usuario = RemoteDatabaseConection.remoteGetUsuario(usuario.getLogin());
+
             //homeClick(focusView);
         }
     }
@@ -375,6 +380,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     public void homeClick(View v){
+        //usuario = RemoteDatabaseConection.remoteGetUsuario(usuario.getLogin());
         saveData();
         showProgress(true);
         mAuthTask = new UserLoginTask(usuario.getLogin(), usuario.getSenha());
@@ -382,6 +388,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         Intent intent = new Intent(this, HomeActivity.class);
         intent.putExtra("usuario", usuario);
         startActivity(intent);
+        finish();
     }
 
     public void saveData(){
@@ -417,12 +424,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             try {
 
                 final String msg = RemoteDatabaseConection.remoteLoginDatabase(usuario);
+                usuario = RemoteDatabaseConection.remoteGetUsuario(usuario.getLogin());
+                System.out.println(Thread.currentThread().getName());
                 LoginActivity.this.runOnUiThread(new Runnable() {
 
                     @Override
                     public void run() {
-//                      System.out.println(responseOutput.toString());
+                        System.out.println(Thread.currentThread().getName());
+                        //String[] str = msg.split("λ");
                         if(msg.equals("Sucesso!")) {
+                            //usuario = new Gson().fromJson(str[1],Usuario.class);
                             homeClick(getCurrentFocus());
                         }
                         else {
