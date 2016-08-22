@@ -206,11 +206,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
+            usuario.setLogin(email);
+            usuario.setSenha(password);
+            //System.out.println(Thread.currentThread().getName());
 
-            //aqui esta o problema
-            usuario.setLogin(mEmailView.getText().toString());
-            usuario.setSenha(mPasswordView.getText().toString());
-            System.out.println(Thread.currentThread().getName());
             new Post(this).execute();
             //RemoteDatabaseConection.remoteLoginDatabase(usuario);
 //            usuario = RemoteDatabaseConection.remoteGetUsuario(usuario.getLogin());
@@ -379,6 +378,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void registerClick(View v){
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void homeClick(View v){
