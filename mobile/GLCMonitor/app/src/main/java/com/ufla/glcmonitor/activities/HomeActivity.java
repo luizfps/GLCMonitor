@@ -54,7 +54,7 @@ public class HomeActivity extends AppCompatActivity
 
         //relativeLayout = (RelativeLayout) findViewById(R.id.content_home);
 
-        //LinearLayout navHeaderApp = (LinearLayout) getResources().getLayout(R.layout.nav_header_app);
+        //LinearLayout navHeaderApp = (LinearLayout) getResources().getLayout(R.sensor_item_view.nav_header_app);
         //((TextView) navHeaderApp.findViewById(R.id.navName)).setText("");
         //((TextView) navHeaderApp.findViewById(R.id.navLogin)).setText("");
 
@@ -102,7 +102,7 @@ public class HomeActivity extends AppCompatActivity
         } else if (id == R.id.nav_cadastrar_sensor) {
             registerSensorClick();
         } else if (id == R.id.nav_exibir_outro_sensor) {
-
+            selectSensorClick();
         } else if (id == R.id.nav_configuracoes) {
             settingsClick();
         } else if(id == R.id.nav_sair){
@@ -122,6 +122,11 @@ public class HomeActivity extends AppCompatActivity
 
     public void registerSensorClick(){
         Intent intent = new Intent(this, RegisterSensorActivity.class);
+        startActivity(intent);
+    }
+
+    public void selectSensorClick(){
+        Intent intent = new Intent(this, SelectSensorActivity.class);
         startActivity(intent);
     }
 

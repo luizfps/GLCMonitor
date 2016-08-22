@@ -21,6 +21,8 @@ public class RemoteDatabaseConection {
             ":" + ConnectionConfiguration.PORTA + "/GLCMonitor/logar.jsp";
     private final static String REMOTE_GET_TEMPERATUREINTERVAL_CONNECTION = "http://"+ConnectionConfiguration.IP+
             ":" + ConnectionConfiguration.PORTA + "/GLCMonitor/getBuscaTemperaturaIntervalosParameter.jsp";
+    private final static String REMOTE_GET_SENSORS_CONNECTION = "http://"+ConnectionConfiguration.IP+
+            ":" + ConnectionConfiguration.PORTA + "/GLCMonitor/get.jsp";
 
     private static URL url;
     private static HttpURLConnection connection;

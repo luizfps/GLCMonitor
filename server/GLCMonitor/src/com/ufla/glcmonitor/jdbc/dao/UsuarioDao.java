@@ -246,7 +246,11 @@ public class UsuarioDao {
 	}
 
 	public Usuario busca(String login) throws SQLException {
-		return busca(login, "email");
+		Usuario usuario = busca(login, "login");
+		if (usuario == null) {
+			return busca(login, "email");
+		}
+		return usuario;
 	}
 
 	public void altera(Usuario usuario) throws SQLException {
