@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            finish();
         }
     }
 
@@ -100,9 +100,7 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            // nada a fazaer deixei igual no desenho da interface
-        } else if (id == R.id.nav_graficos) {
+        if (id == R.id.nav_graficos) {
             graphClick();
         } else if (id == R.id.nav_cadastrar_sensor) {
             registerSensorClick();

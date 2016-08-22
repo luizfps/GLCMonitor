@@ -10,7 +10,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.ufla.glcmonitor.activities.RegisterActivity"
-    tools:showIn="@layout/activity_register">
+    tools:showIn="@layout/activity_register"
+    android:gravity="center_horizontal">
 
     <!-- Login progress -->
     <ProgressBar
@@ -62,7 +63,7 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
+            <!--android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -75,7 +76,7 @@
                     android:maxLines="1"
                     android:singleLine="true" />
 
-            </android.support.design.widget.TextInputLayout>
+            </android.support.design.widget.TextInputLayout-->
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -115,7 +116,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/action_register_in_short"
                 android:textStyle="bold"
-                android:onClick="registrar"/>
+                android:nestedScrollingEnabled="false" />
 
         </LinearLayout>
     </ScrollView>

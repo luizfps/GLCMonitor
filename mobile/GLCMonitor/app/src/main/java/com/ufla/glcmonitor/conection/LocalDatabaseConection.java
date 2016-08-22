@@ -25,6 +25,14 @@ public class LocalDatabaseConection extends SQLiteOpenHelper {
             "  cpf BIGINT UNIQUE" +
             ");" ;
 
+    private static final String CREATE_TABLE_REGISTRO_TEMPERATURA =
+            "create table registroDeTemperatura (" +
+            "  temperatura FLOAT," +
+            "  momento DATETIME," +
+            "  sensor_codigo BIGINT NOT NULL," +
+            ");";
+
+
 
     /*Construtor cria o banco */
 
@@ -35,6 +43,7 @@ public class LocalDatabaseConection extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_USER);
+        db.execSQL(CREATE_TABLE_REGISTRO_TEMPERATURA);
     }
 
     @Override

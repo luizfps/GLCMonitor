@@ -85,7 +85,7 @@ public class RemoteDatabaseConection {
             System.out.println(e.getMessage());
         }
 
-        return "Error";
+        return "Connection Filed";
 
     }
 
