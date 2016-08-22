@@ -1,9 +1,10 @@
 package com.ufla.glcmonitor.jdbc.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Sensor implements Comparable<Sensor> {
+public class Sensor implements Comparable<Sensor>, Serializable  {
 
 	private Long codigo;
 	private String modelo;

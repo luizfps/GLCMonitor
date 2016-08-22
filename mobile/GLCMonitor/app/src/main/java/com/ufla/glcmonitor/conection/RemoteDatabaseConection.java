@@ -1,6 +1,9 @@
 package com.ufla.glcmonitor.conection;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.ufla.glcmonitor.modelo.RegistroDeTemperatura;
+import com.ufla.glcmonitor.modelo.Sensor;
 import com.ufla.glcmonitor.modelo.Usuario;
 
 import java.io.BufferedReader;
@@ -10,6 +13,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 public class RemoteDatabaseConection {
 
@@ -21,8 +25,8 @@ public class RemoteDatabaseConection {
             ":" + ConnectionConfiguration.PORTA + "/GLCMonitor/logar.jsp";
     private final static String REMOTE_GET_TEMPERATUREINTERVAL_CONNECTION = "http://"+ConnectionConfiguration.IP+
             ":" + ConnectionConfiguration.PORTA + "/GLCMonitor/getBuscaTemperaturaIntervalosParameter.jsp";
-    private final static String REMOTE_GET_SENSORS_CONNECTION = "http://"+ConnectionConfiguration.IP+
-            ":" + ConnectionConfiguration.PORTA + "/GLCMonitor/get.jsp";
+    private final static String REMOTE_GET_SENSORES_CONNECTION = "http://"+ConnectionConfiguration.IP+
+            ":" + ConnectionConfiguration.PORTA + "/GLCMonitor/buscaSensor.jsp";
 
     private static URL url;
     private static HttpURLConnection connection;
@@ -43,6 +47,10 @@ public class RemoteDatabaseConection {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    private static void getRemoteSensores(String login)
+    {
+        urlParameters = "login=" + login;
     }
 
     private static void getRemoteUserParameters(Usuario usuario){
@@ -146,5 +154,12 @@ public class RemoteDatabaseConection {
         return (new Gson().fromJson(getRemoteMsgOutput(),Usuario.class));
     }
 
+    public static ArrayList<Sensor>remoteGetSensor (String login)
+    {// retorna um objeto json para a classe
+        getRemoteConnection(REMOTE_GET_SENSORES_CONNECTION );
+        getRemoteSensores(login);
+        setRemoteOutputStream();
+        return (new Gson().fromJson(getRemoteMsgOutput(), new TypeToken<ArrayList<Sensor>>(){}.getType()));
+    }
 
 }

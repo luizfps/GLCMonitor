@@ -1,6 +1,8 @@
 package com.ufla.glcmonitor.jdbc.modelo;
 
-public class UsuarioSensor {
+import java.io.Serializable;
+
+public class UsuarioSensor implements Serializable  {
 
 	private LimitesDeTemperatura limitesDeTemperatura;
 	private Integer intervaloDeAtualizacaoDeDados;

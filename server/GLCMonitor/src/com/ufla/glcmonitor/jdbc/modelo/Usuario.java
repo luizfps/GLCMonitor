@@ -1,11 +1,12 @@
 package com.ufla.glcmonitor.jdbc.modelo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public class Usuario implements Comparable<Usuario> {
+public class Usuario implements Comparable<Usuario>, Serializable  {
 
 	private String nome;
 	private Long telefone;
