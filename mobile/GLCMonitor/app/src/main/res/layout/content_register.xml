@@ -10,7 +10,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.ufla.glcmonitor.activities.RegisterActivity"
-    tools:showIn="@layout/activity_register">
+    tools:showIn="@layout/activity_register"
+    android:scrollIndicators="bottom">
 
     <!-- Login progress -->
     <ProgressBar
@@ -30,7 +31,8 @@
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="1">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -40,10 +42,12 @@
                     android:id="@+id/name_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Insert to name"
+                    android:hint="Nome completo"
                     android:inputType="textPersonName"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:allowUndo="false"
+                    android:height="50dp" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -55,10 +59,11 @@
                     android:id="@+id/email_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Insert to Email"
+                    android:hint="Email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:height="50dp" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -70,10 +75,11 @@
                     android:id="@+id/login_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Insert to username"
+                    android:hint="User name"
                     android:inputType="textAutoComplete"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:height="50dp" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -85,25 +91,119 @@
                     android:id="@+id/senha_register"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Insert to password"
+                    android:hint="Senha"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:height="50dp" />
+
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="57dp">
+
+                <AutoCompleteTextView
+                    android:id="@+id/senha_retry_register"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:hint="Senha novamente"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:layout_above="@+id/editText3"
+                    android:height="45dp"
+                    android:layout_alignRight="@+id/login_form"
+                    android:layout_alignEnd="@+id/login_form"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="43dp"
+                    android:inputType="phone"
+                    android:ems="10"
+                    android:id="@+id/editText"
+                    android:layout_marginBottom="115dp"
+                    android:hint="RG"
+                    android:layout_above="@+id/person_register"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                     />
+
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
 
-                <AutoCompleteTextView
-                    android:id="@+id/senha_retry_register"
+                    android:ems="10"
+                    android:id="@+id/editText3"
+                    android:hint="CPF"
+                    android:layout_alignTop="@+id/editText"
+                    android:layout_marginTop="50dp"
+
+                    android:height="50dp" />
+
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Reinsert to password"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:singleLine="true" />
+                    android:inputType="phone"
+                    android:ems="10"
+                    android:id="@+id/editText4"
+
+                    android:hint="Telefone"
+                    android:height="50dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignRight="@+id/login_form"
+                    android:layout_alignEnd="@+id/login_form"
+                    android:layout_below="@+id/editText3"
+                    android:layout_marginTop="5dp" />
+
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="113dp"
+                    android:layout_height="70dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="sexo:"
+                    android:id="@+id/textView6" />
+
+                <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:id="@+id/feminino"
+                android:hint="feminino"
+                android:layout_gravity="left" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="59dp"
+                    android:id="@+id/masculino"
+                    android:layout_gravity="right"
+                    android:hint="masculino" />
+
+                />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -112,12 +212,14 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:text="@string/action_register_in_short"
                 android:textStyle="bold"
-                android:onClick="registrar"/>
-
+                android:onClick="registrar"
+                android:layout_alignBottom="@+id/login_form"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
         </LinearLayout>
     </ScrollView>
+
 
 </RelativeLayout>

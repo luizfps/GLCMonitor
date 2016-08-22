@@ -1,8 +1,11 @@
 package com.ufla.glcmonitor.jdbc.modelo;
 
+
+
 import java.util.Date;
 
 public class RegistroDeTemperatura {
+	
 
 	private Float temperatura;
 	private Date momento;

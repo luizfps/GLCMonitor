@@ -18,8 +18,42 @@ import com.ufla.glcmonitor.jdbc.persistance.ConnectionFactory;
  * @author glcmonitor
  *
  */
-public class RegistroDeTemperaturaDao {
 
+
+public class RegistroDeTemperaturaDao {
+	public List<RegistroDeTemperatura> buscaIntervalo(Long sensorCodigo,String dataInicial,String dataFinal) throws SQLException {
+		String sql = "select * from registroDeTemperatura " + "where sensor_codigo=?"+" and "+"momento" +" between "+"\'"+dataInicial+"\'"+" and "+"\'"+dataFinal+"\'";
+		
+		System.out.println(sql);
+		Connection connection = null;
+		PreparedStatement stmt = null;
+		List<RegistroDeTemperatura> registroDeTemperaturas = new ArrayList<>();
+		try {
+			connection = new ConnectionFactory().getConnection();
+			stmt = connection.prepareStatement(sql);
+			stmt.setLong(1, sensorCodigo);
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				RegistroDeTemperatura registroDeTemperatura = new RegistroDeTemperatura();
+				registroDeTemperatura
+						.setTemperatura(Util.getResultSetValueFloat(rs, "temperatura"));
+				registroDeTemperatura.setMomento((rs.getTimestamp("momento")));
+				registroDeTemperaturas.add(registroDeTemperatura);
+			}
+			rs.close();
+			return registroDeTemperaturas;
+		} catch (SQLException e) {
+			throw new SQLException(MensagensDeExcecao.getMensagemDeExcecao(e.getMessage()));
+		} finally {
+			if (connection != null) {
+				connection.close();
+			}
+			if (stmt != null) {
+				stmt.close();
+			}
+		}
+	}
 	/**
 	 * Adiciona um registro de temperatura de um sensor no banco de dados.
 	 * 
@@ -71,17 +105,18 @@ public class RegistroDeTemperaturaDao {
 		String sql = "select * from registroDeTemperatura " + "where sensor_codigo=?";
 		Connection connection = null;
 		PreparedStatement stmt = null;
+		List<RegistroDeTemperatura> registroDeTemperaturas = new ArrayList<>();
 		try {
 			connection = new ConnectionFactory().getConnection();
 			stmt = connection.prepareStatement(sql);
 			stmt.setLong(1, sensorCodigo);
 			ResultSet rs = stmt.executeQuery();
-			List<RegistroDeTemperatura> registroDeTemperaturas = new ArrayList<>();
+			
 			while (rs.next()) {
 				RegistroDeTemperatura registroDeTemperatura = new RegistroDeTemperatura();
 				registroDeTemperatura
 						.setTemperatura(Util.getResultSetValueFloat(rs, "temperatura"));
-				registroDeTemperatura.setMomento(rs.getDate("momento"));
+				registroDeTemperatura.setMomento((rs.getTimestamp("momento")));
 				registroDeTemperaturas.add(registroDeTemperatura);
 			}
 			rs.close();
@@ -124,7 +159,7 @@ public class RegistroDeTemperaturaDao {
 				registroDeTemperatura = new RegistroDeTemperatura();
 				registroDeTemperatura
 						.setTemperatura(Util.getResultSetValueFloat(rs, "temperatura"));
-				registroDeTemperatura.setMomento(rs.getDate("momento"));
+				registroDeTemperatura.setMomento(rs.getTimestamp("momento"));
 			}
 			rs.close();
 			return registroDeTemperatura;
