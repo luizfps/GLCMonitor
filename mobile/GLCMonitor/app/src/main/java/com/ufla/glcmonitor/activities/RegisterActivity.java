@@ -21,6 +21,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -36,10 +37,17 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     public void registrar(View view) {
+
         usuario.setNome(((EditText) findViewById(R.id.name_register)).getText().toString());
         usuario.setEmail(((EditText) findViewById(R.id.email_register)).getText().toString());
         usuario.setLogin(((EditText) findViewById(R.id.login_register)).getText().toString());
         usuario.setSenha(((EditText) findViewById(R.id.senha_register)).getText().toString());
+//        usuario.setCpf((Long.parseLong(findViewById(R.id.editText3).toString())));
+  //      usuario.setRg((Long.parseLong(findViewById(R.id.editText).toString())));
+        usuario.setDataDeCadastramento(new Date());
+       // usuario.setSexo();
+        //usuario.setDataDeNascimento();
+
         if(!(((EditText) findViewById(R.id.senha_retry_register))
                 .getText().toString()).equals(usuario.getSenha())) {
             Toast.makeText(this, "Senhas incompatíveis!",

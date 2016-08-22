@@ -206,6 +206,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
+
+            //aqui esta o problema
             usuario.setLogin(mEmailView.getText().toString());
             usuario.setSenha(mPasswordView.getText().toString());
             System.out.println(Thread.currentThread().getName());

@@ -86,10 +86,7 @@ public class HomeActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
 
-        if (id == R.id.action_settings) {
-            settingsClick();
-            return true;
-        }
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -100,9 +97,8 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
-            // nada a fazaer deixei igual no desenho da interface
-        } else if (id == R.id.nav_graficos) {
+
+        if (id == R.id.nav_graficos) {
             graphClick();
         } else if (id == R.id.nav_cadastrar_sensor) {
             registerSensorClick();
