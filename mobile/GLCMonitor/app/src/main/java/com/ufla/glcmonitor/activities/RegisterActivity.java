@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.ufla.glcmonitor.conection.RemoteDatabaseConection;
 import com.ufla.glcmonitor.modelo.Usuario;
 
+import java.util.Date;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -101,6 +102,7 @@ public class RegisterActivity extends AppCompatActivity {
                     mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
                 }
             });
+
         } else {
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
@@ -182,6 +184,7 @@ public class RegisterActivity extends AppCompatActivity {
             usuario.setEmail(email);
             usuario.setLogin(email); // Login por padrao e o e-mail
             usuario.setSenha(password);
+            usuario.setDataDeCadastramento(new Date());
             new Post(this).execute();
         }
     }

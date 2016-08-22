@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
+import java.util.Date;
 public class RemoteDatabaseConection {
 
     private final static String REMOTE_GET_USER_CONNECTION = "http://"+ConnectionConfiguration.IP+
@@ -19,11 +19,13 @@ public class RemoteDatabaseConection {
             ":" + ConnectionConfiguration.PORTA + "/GLCMonitor/cadastrarUsuario.jsp";
     private final static String REMOTE_LOGIN_CONNECTION = "http://"+ConnectionConfiguration.IP+
             ":" + ConnectionConfiguration.PORTA + "/GLCMonitor/logar.jsp";
+    private final static String REMOTE_GET_TEMPERATUREINTERVAL_CONNECTION = "http://"+ConnectionConfiguration.IP+
+            ":" + ConnectionConfiguration.PORTA + "/GLCMonitor/getBuscaTemperaturaIntervalosParameter.jsp";
 
     private static URL url;
     private static HttpURLConnection connection;
     private static DataOutputStream dStream;
-    private static String urlParameters;
+    private static String urlParameters,urlParameters2,urlParameters3;
 
     private static void getRemoteConnection(String connectionType) {
         try {
@@ -49,6 +51,33 @@ public class RemoteDatabaseConection {
     private static void getLoginParameter(String login){
         Gson gson = new Gson();
         urlParameters = "login=" + login;
+    }
+    public static String getBuscaTemperaturaIntervalosParameter(long codigo_sensor,String data_inicial,String data_final){
+
+        getRemoteConnection(REMOTE_GET_TEMPERATUREINTERVAL_CONNECTION);
+
+        System.out.println(codigo_sensor);
+        System.out.println(data_inicial);
+        System.out.println( data_final);
+        //esses parameteros serão enviados via post
+        urlParameters = "codigo_sensor=" +String.valueOf(codigo_sensor)+"&";
+        urlParameters2= "data_inicial=" +data_inicial+"&";
+        urlParameters3=  "data_final=" +data_final;
+
+            try {
+                dStream = new DataOutputStream(connection.getOutputStream());
+                dStream.writeBytes(urlParameters);
+                dStream.writeBytes(urlParameters2);
+                dStream.writeBytes(urlParameters3);
+                dStream.flush();
+                dStream.close();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        return getRemoteMsgOutput();
     }
 
     private static void setRemoteOutputStream(){

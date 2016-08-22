@@ -112,8 +112,13 @@ public class UsuarioDao {
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, filtro);
 			ResultSet rs = stmt.executeQuery();
+			
+			
 			Usuario usuario = null;
 			if (rs.next()) {
+				
+				
+				
 				usuario = new Usuario();
 				usuario.setCpf(Util.getResultSetValueLong(rs, "cpf"));
 				usuario.setDataDeCadastramento(
@@ -136,6 +141,7 @@ public class UsuarioDao {
 				usuario.setSensores(new SensorDao().buscaPorUsuario(usuario));
 			}
 			rs.close();
+			
 			return usuario;
 		} catch (SQLException e) {
 			throw new SQLException(MensagensDeExcecao.getMensagemDeExcecao(e.getMessage()));
@@ -240,7 +246,7 @@ public class UsuarioDao {
 	}
 
 	public Usuario busca(String login) throws SQLException {
-		return busca(login, "login");
+		return busca(login, "email");
 	}
 
 	public void altera(Usuario usuario) throws SQLException {

@@ -209,6 +209,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             usuario.setLogin(email);
             usuario.setSenha(password);
             //System.out.println(Thread.currentThread().getName());
+
             new Post(this).execute();
             //RemoteDatabaseConection.remoteLoginDatabase(usuario);
 //            usuario = RemoteDatabaseConection.remoteGetUsuario(usuario.getLogin());
