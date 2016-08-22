@@ -1,6 +1,8 @@
 package com.ufla.glcmonitor.jdbc.modelo;
 
-public class LimitesDeTemperatura {
+import java.io.Serializable;
+
+public class LimitesDeTemperatura implements Serializable {
 
 	private Float temperaturaMinima;
 	private Float temperaturaMaxima;

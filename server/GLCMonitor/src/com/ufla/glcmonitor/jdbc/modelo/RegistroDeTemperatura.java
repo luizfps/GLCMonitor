@@ -2,9 +2,10 @@ package com.ufla.glcmonitor.jdbc.modelo;
 
 
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class RegistroDeTemperatura {
+public class RegistroDeTemperatura implements Serializable  {
 	
 
 	private Float temperatura;

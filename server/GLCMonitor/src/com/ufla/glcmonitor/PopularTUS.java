@@ -45,5 +45,6 @@ public class PopularTUS {
 			System.err.println(e.toString());
 		}
 	}
+	//insert into sensor (codigo,modelo,temperaturaMinima,temperaturaMaxima,erro) values (2,A,20,25,2,null);
 
 }

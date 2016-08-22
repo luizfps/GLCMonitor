@@ -170,9 +170,9 @@ public class SensorDao {
 				sensor.setModelo(rs.getString("modelo"));
 				sensor.setTemperaturaMaxima(Util.getResultSetValueFloat(rs, "temperaturaMaxima"));
 				sensor.setTemperaturaMinima(Util.getResultSetValueFloat(rs, "temperaturaMinima"));
-				sensor.setUsuario(new UsuarioDao().busca(rs.getString("usuario_login")));
-				sensor.setRegistrosDeTemperatura(
-						new RegistroDeTemperaturaDao().busca(rs.getLong("codigo")));
+//				sensor.setUsuario(new UsuarioDao().busca(rs.getString("usuario_login")));
+//				sensor.setRegistrosDeTemperatura(
+				//						new RegistroDeTemperaturaDao().busca(rs.getLong("codigo")));
 				sensores.add(sensor);
 			}
 			rs.close();
@@ -206,9 +206,9 @@ public class SensorDao {
 				sensor.setModelo(rs.getString("modelo"));
 				sensor.setTemperaturaMaxima(Util.getResultSetValueFloat(rs, "temperaturaMaxima"));
 				sensor.setTemperaturaMinima(Util.getResultSetValueFloat(rs, "temperaturaMinima"));
-				sensor.setUsuario(usuario);
-				sensor.setRegistrosDeTemperatura(
-						new RegistroDeTemperaturaDao().busca(rs.getLong("codigo")));
+//				sensor.setUsuario(usuario);
+//				sensor.setRegistrosDeTemperatura(
+//						new RegistroDeTemperaturaDao().busca(rs.getLong("codigo")));
 				sensores.add(sensor);
 			}
 			rs.close();

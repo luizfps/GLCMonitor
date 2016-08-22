@@ -7,7 +7,7 @@
 	Usuario usuario = gson.fromJson(usuarioJson, Usuario.class);
 	
 
-	Usuario usuarioEsperado = new UsuarioDao().busca(usuario.getEmail());
+	Usuario usuarioEsperado = new UsuarioDao().busca(usuario.getLogin());
 	
 // 	System.out.println(usuario.getLogin()+"  "+usuario.getSenha());
 
