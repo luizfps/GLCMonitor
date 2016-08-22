@@ -67,6 +67,13 @@ public class UsuarioDaoTeste {
 		List<Usuario> usuarios = usuarioDao.getLista();
 		assertTrue(usuarios.isEmpty());
 	}
+	
+	@Test
+	public void usuarioEmailELoginIguaisTeste() throws SQLException {
+		usuarioDao.adiciona(UtilTestes.getUsuario(10L, null, null, "carlos@email.com", null, 
+				"carlos@email.com", "carlos", null, null, null, null, null));
+		assertTrue(usuarioDao.getLista().size() == 1);
+	}
 
 	@Test
 	public void buscaSemUsuariosTeste() throws SQLException {
