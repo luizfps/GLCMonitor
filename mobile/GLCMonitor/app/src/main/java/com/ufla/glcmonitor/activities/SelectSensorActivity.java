@@ -1,34 +1,49 @@
 package com.ufla.glcmonitor.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import com.ufla.glcmonitor.modelo.Sensor;
+import com.ufla.glcmonitor.conection.LocalDatabaseConection;
 
 import com.ufla.glcmonitor.conection.RemoteDatabaseConection;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.ufla.glcmonitor.modelo.Sensor;
 
 /**
  * Created by carlos on 8/22/16.
  */
 public class SelectSensorActivity extends AppCompatActivity {
 
-    private ArrayAdapter listAdapterGrammar;
+    private ArrayAdapter<Sensor> listAdapterSensor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_sensor);
-        List<Sensor> sensorsList = new ArrayList<>();
-        listAdapterGrammar = new ArrayAdapterSensor(this, sensorsList);
-        ((ListView) findViewById(R.id.sensors)).setAdapter(listAdapterGrammar);
+        new Post(this).execute();
+       ((ListView) findViewById(R.id.sensors)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                LocalDatabaseConection.setActualSensor(SelectSensorActivity.this,
+                        listAdapterSensor.getItem(i).getCodigo());
+                Toast.makeText(SelectSensorActivity.this, "Sensor "+
+                        listAdapterSensor.getItem(i).getCodigo()+" selecionado!", Toast.LENGTH_SHORT);
+                Intent intent = new Intent(SelectSensorActivity.this, HomeActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
+
+
+
 
 
     private class Post extends AsyncTask<String, Void, Void> {
@@ -54,13 +69,15 @@ public class SelectSensorActivity extends AppCompatActivity {
         protected Void doInBackground(String... params) {
 
             try {
+                listAdapterSensor = new ArrayAdapterSensor(SelectSensorActivity.this,
+                        RemoteDatabaseConection.remoteGetSensor
+                        (LocalDatabaseConection.getLocalLogin(getBaseContext())));
 
-                final String msg = RemoteDatabaseConection.remoteLoginDatabase();
                 SelectSensorActivity.this.runOnUiThread(new Runnable() {
 
                     @Override
                     public void run() {
-
+                        ((ListView) findViewById(R.id.sensors)).setAdapter(listAdapterSensor);
                     }
                 });
 

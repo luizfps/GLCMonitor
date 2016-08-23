@@ -16,17 +16,21 @@ public class PopularTUS {
 		// TODO Auto-generated method stub
 		try {
 			
+			Usuario usuario = new Usuario();
+			usuario.setLogin("luiz@gmail.com");
+			usuario.setSenha("12345");
 			
-			
-			Sensor sensor = new Sensor();
-			sensor.setCodigo((long) 1);
-			
-			//Usuario usuario = new Usuario();
-			//usuario.setLogin("luiz");
 			
 			//new UsuarioDao().adiciona(usuario);
 			
-			new SensorDao().adiciona(sensor,"luiz");
+			
+			for(int j = 1; j < 7; j++) {
+			Sensor sensor = new Sensor();
+			sensor.setCodigo((long) j);
+			
+
+			
+			new SensorDao().adiciona(sensor,"luiz@gmail.com");
 			
 			Float temperatura = null;
 			for(int i=0;i<30;i++){
@@ -38,6 +42,7 @@ public class PopularTUS {
 				System.out.println(sensor.getCodigo()+ ";" +temperatura);
 				
 				Thread.sleep(1000);
+			}
 			}
 			
 			 

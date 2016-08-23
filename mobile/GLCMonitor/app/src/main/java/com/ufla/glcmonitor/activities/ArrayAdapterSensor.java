@@ -1,7 +1,12 @@
 package com.ufla.glcmonitor.activities;
 
 import android.content.Context;
+
+import com.ufla.glcmonitor.conection.LocalDatabaseConection;
 import com.ufla.glcmonitor.modelo.Sensor;
+import com.ufla.glcmonitor.modelo.Usuario;
+
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,22 +26,37 @@ public class ArrayAdapterSensor extends ArrayAdapter<Sensor> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Sensor sensorItem = getItem(position);
+        final Sensor sensorItem = getItem(position);
 
         LayoutInflater buckysInflater = LayoutInflater.from(getContext());
         View arrayAdapterGrammar = buckysInflater.inflate(R.layout.sensor_item_view, parent,
                 false);
 
-        ((TextView) arrayAdapterGrammar.findViewById(R.id.codigo)).setText(sensorItem.getCodigo()
-                .toString());
+        ((TextView) arrayAdapterGrammar.findViewById(R.id.codigo)).setText(
+                "Código: "+String.valueOf(sensorItem.getCodigo()));
         ((TextView) arrayAdapterGrammar.findViewById(R.id.modelo)).setText
-                (sensorItem.getModelo());
+                ("Modelo: "+sensorItem.getModelo());
         ((TextView) arrayAdapterGrammar.findViewById(R.id.tempMin)).setText
-                (sensorItem.getTemperaturaMinima().toString());
+                ("Temperatura Mínima: "+String.valueOf(sensorItem.getTemperaturaMinima()));
         ((TextView) arrayAdapterGrammar.findViewById(R.id.tempMax)).setText
-                (sensorItem.getTemperaturaMaxima().toString());
+                ("Temperatura Máxima: "+String.valueOf(sensorItem.getTemperaturaMaxima()));
         ((TextView) arrayAdapterGrammar.findViewById(R.id.erro)).setText
-                (sensorItem.getErro().toString());
+                ("Erro: "+String.valueOf(sensorItem.getErro()));
+        arrayAdapterGrammar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LocalDatabaseConection.setActualSensor(getContext(),
+                        sensorItem.getCodigo());
+                System.out.println(sensorItem.getCodigo());
+                Usuario usuario = new Usuario();
+                usuario.setNome("Ola");
+                usuario.setLogin("ola@email");
+                Intent intent = new Intent(getContext(), HomeActivity.class);
+                intent.putExtra("usuario", usuario);
+                getContext().startActivity(intent);
+            }
+        });
+
         return arrayAdapterGrammar;
     }
 

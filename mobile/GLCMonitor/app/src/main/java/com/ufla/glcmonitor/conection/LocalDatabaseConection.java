@@ -29,7 +29,7 @@ public class LocalDatabaseConection extends SQLiteOpenHelper {
             "create table registroDeTemperatura (" +
             "  temperatura FLOAT," +
             "  momento DATETIME," +
-            "  sensor_codigo BIGINT NOT NULL," +
+            "  sensor_codigo BIGINT NOT NULL" +
             ");";
 
 
@@ -69,11 +69,23 @@ public class LocalDatabaseConection extends SQLiteOpenHelper {
         return sharedPref.getString(context.getString(R.string.preference_user_login),"User");
     }
 
+    public  static  Long getActualSensor(Context context){
+        SharedPreferences sharedPref = context.getSharedPreferences("preference",context.MODE_PRIVATE);
+        return sharedPref.getLong("sensor",-1);
+    }
+
     public static void setLogget(Context context,boolean logged, String loggin){
         SharedPreferences sharedPref = context.getSharedPreferences("preference",context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean(context.getString(R.string.preference_user_logged), logged);
         editor.putString(context.getString(R.string.preference_user_login), loggin);
+        editor.commit();
+    }
+
+    public static void setActualSensor(Context context,Long codigoSensor){
+        SharedPreferences sharedPref = context.getSharedPreferences("preference",context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putLong("sensor", codigoSensor);
         editor.commit();
     }
 }

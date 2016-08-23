@@ -42,6 +42,9 @@
             android:label="Novo Gráfico"
 
             android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".SelectSensorActivity"
+            android:label="Select Sensor Activity" />
     </application>
 
 </manifest>

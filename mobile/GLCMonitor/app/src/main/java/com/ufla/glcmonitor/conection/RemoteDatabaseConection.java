@@ -159,7 +159,8 @@ public class RemoteDatabaseConection {
         getRemoteConnection(REMOTE_GET_SENSORES_CONNECTION );
         getRemoteSensores(login);
         setRemoteOutputStream();
-        return (new Gson().fromJson(getRemoteMsgOutput(), new TypeToken<ArrayList<Sensor>>(){}.getType()));
+        return (new Gson().fromJson(getRemoteMsgOutput(),
+                new TypeToken<ArrayList<Sensor>>(){}.getType()));
     }
 
 }
